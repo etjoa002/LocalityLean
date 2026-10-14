@@ -1,0 +1,116 @@
+\section*{Three languages for one bound: a reading guide}
+\addcontentsline{toc}{section}{Three languages for one bound: a reading guide}
+
+\noindent\motiv{\vet{Lieb-Robinson bounds are written in two dialects. The review~\cite{chen-lucas-yin}
+speaks of a graph whose edges carry Hamiltonian terms $H_e$, of a \emph{site matrix} $h_{uv}$
+adding up the strengths of the terms containing two sites, and of walks on the graph; the
+mathematical-physics papers~\cite{nachtergaele-sims,nsy2019} speak of an interaction $\Phi$
+assigning a self-adjoint term $\Phi(Z)$ to each finite set $Z$ of sites, of a \emph{decay
+function} $F$ with a reproducing property, and of the $F$-norm $\norm{\Phi}_F$ (the site matrix
+and the decay functions are defined in Chapter~\ref{sec:closed}).
+
+These notes use a third, slightly more general language, chosen so that one theorem covers Hamiltonian and open
+dynamics alike: a finite family of \emph{local generators} $L_i$ with supports $S_i$ and
+strengths $\kappa_i$, and \emph{paths} of supports from the probe's region to the observable's.
+The table says which object plays which role, and where each conversion is proved.}}
+
+\medskip
+\noindent\vet{\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.29\linewidth}>{\raggedright\arraybackslash}p{0.30\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}@{}}
+\toprule
+Review (graph language) & Mathematical physics (interactions) & These notes (generators) \\
+\midrule
+\endfirsthead
+\toprule
+Review & Mathematical physics & These notes \\
+\midrule
+\endhead
+edge Hamiltonian $H_e$, $e=\{u,v\}$ & interaction term $\Phi(Z)$, $Z$ a finite set &
+generator $L_i$ with support $S_i$; Hamiltonian case $L_i=\ii\comm{\Phi(S_i)}{\cdot}$
+(Chapter~\ref{sec:qudit}) \\
+strength $\norm{H_e}$ & $\norm{\Phi(Z)}$ & constant $\kappa_i$; equals $\norm{\Phi(S_i)}$ in the
+Hamiltonian case; \vetnew{for a Lindblad term the direct strength
+$\norm H+\sum_j\norm{\Gamma_j}^2$, by a commutator identity, or $\norm{L_S}$ through the
+conditional expectation} (Chapters~\ref{sec:qudit}, \ref{sec:approx}) \\
+Heisenberg evolution $e^{\ii tH}Ae^{-\ii tH}$ & $\tau_t(A)$, the automorphism group &
+$e^{tL}A$ with $L=\sum_i L_i$; hypotheses G1--G3 (Definition~\ref{def:local-generators}); equal
+to the conjugation in the Hamiltonian case (Chapter~\ref{sec:qudit}) \\
+operators on the qubits of a region & \vetnew{$\cA_X=\bigotimes_{x\in X}\Mat_n\otimes1$}, the tensor
+factor & the matrices local to $X$: zero between configurations differing off $X$, entries
+depending on the letters inside $X$ (Chapter~\ref{sec:qudit}) \\
+\vetnew{bosons absent} & \vetnew{Weyl operators $W(f)$ with $\tau_t(W(f))=W(f_t)$, the kernel $f_t$ by
+normal modes} & \vetnew{a quadratic generator $K$ on the Weyl labels, the flow $T_t=e^{tK}$ and
+$\alpha_t(W(f))=W(T_tf)$; the site matrix is $|K|$ (Chapter~\ref{sec:harmonic})} \\
+$D(X,Y)$ absent & \vetnew{$D(X,Y)=\min\{\sum_{X\times\bd Y},\sum_{\bd X\times Y}\}$}, eq.~(3.24) of
+\cite{nsy2019} & the smaller of the two \vetnew{walk sums or sums of the decay function}, by the role exchange of
+automorphisms (Chapter~\ref{sec:qudit}) \\
+site matrix $h_{uv}=\sum_{e\ni u,v}\norm{H_e}$, eq.~(3.35) & $\sum_{Z\ni u,v}\norm{\Phi(Z)}\le
+\norm{\Phi}_F\,F(\dist(u,v))$, eq.~(3.14) & site matrix $h_{uv}=\sum_{i:\,u,v\in S_i}\kappa_i$, with
+diagonal $h_{uu}=\sum_{i:\,u\in S_i}\kappa_i$ (Chapter~\ref{sec:closed}) \\
+walk on the graph; irreducible path (Chen--Lucas) & chain of interaction supports with
+boundary-crossing sets, eqs.~(3.41)--(3.42) of~\cite{nsy2019} & path: indices $i_1,\dots,i_k$
+with $S_{i_1}$ crossing $Y$ and each later support crossing the previous one (no term follows
+itself, none is nested in its predecessor), with first contact with $X$ at step $k$
+(Definition~\ref{def:path}) \\
+\vetnew{$\mathcal C_{X,Y}(t)\le\sum_{x\in X,y\in Y}(e^{2|t|h})_{xy}$}, eq.~(3.36), with
+$\mathcal C=\tfrac12\sup\norm{\comm{A(t)}B}$ by its eq.~(3.24) (its (3.22) omits the $\tfrac12$, a
+misprint) &
+$\norm{\comm{\tau_t(A)}{B}}\le\frac{2\norm A\norm B}{C_F}(e^{2\norm{\Phi}_F C_F t}-1)D(X,Y)$,
+Thm.~3.1 of~\cite{nsy2019} & path series (Theorem~\ref{thm:master}), then the two closed forms
+as corollaries (Chapter~\ref{sec:closed}); \vetnew{the matrix form is the review's (3.36) with
+its constant doubled and the $-1$ that the series proof gives} \\
+Haar average over unitaries on $X^c$, Prop.~4.1 & conditional expectation $\mathbb E_X$ as a
+finite group average, eq.~(4.6) of~\cite{nsy2018} & conditional expectation $P_X$, the
+normalized partial trace, computed as a finite twirl over the Weyl unitaries of $X^c$
+(Chapter~\ref{sec:approx}); \vetnew{also a second route to G1 for Lindblad terms, with the
+strength $\norm{L_S}$} \\
+$\norm{\mathbb E_SA-A}\le\sup\norm{\comm A{B}}\le2\norm{\mathbb E_SA-A}$, Prop.~4.1 & Lemma~4.1 of~\cite{nsy2019} &
+local approximation, the same constants (Theorem~\ref{thm:localapprox}); on any causal net the
+converse holds for every element of $\cA(X)$ \\
+Truncated dynamics $\norm{\tau_t(A)-\tau^{B}_t(A)}$ under the Hamiltonian restricted to $B$,
+Prop.~4.3 & --- & $\norm{A(t)-P_{X'}A(t)}$ with the conditional expectation as the local
+approximant, a corollary of the walk bound with our constants (Theorem~\ref{thm:truncated});
+stated as $\varepsilon$-locality of $e^{tL}$, the approximate form of a cellular automaton's
+locality (Corollary~\ref{cor:automaton}) \\
+Lindblad generator, Thm.~3.14, with the norms of the terms as strengths & --- & the same
+theorem: a Lindblad family is a generator family satisfying G1--G3, G3 as the contraction
+hypothesis implied by the review's complete positivity (Chapter~\ref{sec:approx}) \\
+--- & CAR algebra, parity automorphism, $\comm{A}{B}=0$ or $\{A,B\}=0$ for disjoint supports,
+Prop.~2.1 of~\cite{nsy2018} & graded net; graded bracket $\gcomm{A}{B}$ (Chapter~\ref{sec:fermions}) \\
+\bottomrule
+\end{longtable}}
+
+\medskip
+\noindent\vet{\textbf{Why the path is the right object: two small examples.} The dictionary
+above maps three ways of counting how a signal travels: the paths of these notes, the review's
+sequences of edges, and the site matrix $h$, whose powers count walks between sites. The two
+examples show how the three counts relate on the smallest cases, and why these notes count paths:
+the path count is the one the proof produces, it is never larger than the site-matrix count (so
+the closed forms of Chapter~\ref{sec:closed} follow from it), and the looser notion of
+union-chains fails that comparison.
+
+\emph{The two-term chain.} Two terms, $S_1=\{0,1\}$ of strength $\kappa_1$ and $S_2=\{1,2\}$ of
+strength $\kappa_2$, with the probe on $Y=\{2\}$ and the observable on $X=\{0\}$. Only $S_2$
+crosses $Y$; after it only $S_1$ can follow, since $S_2$ does not cross itself; so the only path
+is $(S_2,S_1)$, $P_2=\kappa_1\kappa_2$, and the bound of Chapter~\ref{sec:master} is
+$4\kappa_1\kappa_2t^2$ \vetnew{for every $t\ge0$}. The review's sequences admit the alternating sequences
+$(S_2,S_1,S_2,\dots)$ as well, since they have no first-contact condition; the site matrix counts
+even more, every walk, and its diagonal entry $h_{11}=\kappa_1+\kappa_2$ is what pays for the
+repeats it admits, so that $P_k\le(h^k)_{02}$ for every $k$.
+
+\emph{Three terms.} Terms on $\{1,2\}$, $\{1,3\}$, $\{3,4\}$, all of strength one, $Y=\{1\}$,
+$X=\{4\}$. The sequence $(\{1,3\},\{1,2\},\{3,4\})$ is a union-chain, each set meeting the
+union of the earlier ones and $Y$, but it is not a path: $\{1,2\}$ and $\{3,4\}$ do not meet.
+Counting paths of length $k$ against the entries $(h^k)_{41}$ gives $0\le0$, $1\le1$, $1\le5$,
+$1\le20$ for $k=1,\dots,4$. Union-chains, counted the same way, exceed the matrix entries on a
+four-term hypergraph on three sites, so they cannot be the bookkeeping object of a bound that is
+to imply the site-matrix form.}
+
+\medskip
+\noindent\vet{\textbf{Reconnections.} \vetnew{Each chapter from Chapter~\ref{sec:master} on ends
+with the sources' statements recovered in the sources' notation: the review's Theorem~3.4 in
+Chapter~\ref{sec:master}; Theorem~3.1 of~\cite{nsy2019} in Chapters~\ref{sec:closed}
+and~\ref{sec:qudit}; the review's bound for spin systems, its eq.~(3.36), in
+Chapter~\ref{sec:qudit}; the review's Theorem~3.14 and Proposition~4.1 in
+Chapter~\ref{sec:approx}; Theorem~3.1 of~\cite{nrss2009} in Chapter~\ref{sec:harmonic}; Theorem~3.1
+of~\cite{nsy2018} in the chapter to come.} The route of the sources through the Jacobi identity is sketched in
+Chapter~\ref{sec:master}.}

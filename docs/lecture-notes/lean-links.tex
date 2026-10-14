@@ -1,0 +1,54 @@
+% Adapted from QCALean's docs/lecture-notes (commit f7673a2), itself adapted from LinearAQFT's;
+% macro prefix QCA renamed LL.
+% Navigation only; checked labels are maintained with reviewed correspondence.
+\definecolor{LLTagFill}{HTML}{EEEAF8}
+\definecolor{LLTagBorder}{HTML}{D6CEEB}
+\definecolor{LLTagText}{HTML}{5B477D}
+\newcommand{\LLLeanTag}{%
+  \tikz[baseline=(tag.base)]\node[rounded corners=1.5pt,
+    fill=LLTagFill,draw=LLTagBorder,text=LLTagText,
+    line width=0.3pt,inner xsep=3pt,inner ysep=1.5pt] (tag)
+    {\normalfont\scriptsize\sffamily Lean\,\ensuremath{\checkmark}};}
+\definecolor{LLArtFill}{HTML}{F2F2F2}
+\definecolor{LLArtBorder}{HTML}{BDBDBD}
+\definecolor{LLArtText}{HTML}{555555}
+\newcommand{\LLArtefactTag}{%
+  \tikz[baseline=(tag.base)]\node[rounded corners=1.5pt,
+    fill=LLArtFill,draw=LLArtBorder,text=LLArtText,dashed,
+    line width=0.3pt,inner xsep=3pt,inner ysep=1.5pt] (tag)
+    {\normalfont\scriptsize\sffamily formalization};}
+\newcommand{\artefact}[1]{#1\nobreak\hspace{0.3em}\LLArtefactTag}
+% Status tags for examples without a reviewed Lean counterpart: script ✓ (exhaustively
+% verified by a check script) and paper (checked on paper only).
+\definecolor{LLScrFill}{HTML}{E8F3EC}
+\definecolor{LLScrBorder}{HTML}{BFDCC9}
+\definecolor{LLScrText}{HTML}{2F6B45}
+\newcommand{\LLScriptTag}{%
+  \tikz[baseline=(tag.base)]\node[rounded corners=1.5pt,
+    fill=LLScrFill,draw=LLScrBorder,text=LLScrText,
+    line width=0.3pt,inner xsep=3pt,inner ysep=1.5pt] (tag)
+    {\normalfont\scriptsize\sffamily script\,\ensuremath{\checkmark}};}
+\definecolor{LLPapFill}{HTML}{FBF1E3}
+\definecolor{LLPapBorder}{HTML}{E6CFA8}
+\definecolor{LLPapText}{HTML}{7A5520}
+\newcommand{\LLPaperTag}{%
+  \tikz[baseline=(tag.base)]\node[rounded corners=1.5pt,
+    fill=LLPapFill,draw=LLPapBorder,text=LLPapText,
+    line width=0.3pt,inner xsep=3pt,inner ysep=1.5pt] (tag)
+    {\normalfont\scriptsize\sffamily paper};}
+\makeatletter
+\newcommand{\LLExampleStatus}[2]{\expandafter\gdef\csname ll@status@#1\endcsname{#2}}
+\newcommand{\LLCheckedLabel}[1]{\expandafter\gdef\csname ll@checked@#1\endcsname{}}
+\newcommand{\LLEnableLinks}{%
+  \let\LLOriginalLabel\label
+  \renewcommand{\label}[1]{%
+    \LLOriginalLabel{##1}%
+    \ifcsname ll@checked@##1\endcsname
+      \nobreak\hspace{0.4em}\hyperlink{lean:##1}{\LLLeanTag}%
+    \else\ifcsname ll@status@##1\endcsname
+      \nobreak\hspace{0.4em}\LLStatusTag{\csname ll@status@##1\endcsname}%
+    \fi\fi}}
+\def\ll@script{script}\def\ll@paper{paper}
+\newcommand{\LLStatusTag}[1]{\edef\ll@s{#1}%
+  \ifx\ll@s\ll@script\LLScriptTag\else\ifx\ll@s\ll@paper\LLPaperTag\fi\fi}
+\makeatother

@@ -1,0 +1,24 @@
+% Figure: the twirl onto a region X = {2, 3} of a chain of six sites. Transcription (for cheap
+% agents): six sites 0..5 on a line; the region X = {2, 3} is a dashed box; each site u outside
+% X carries a small box labelled "X^{xi_u} Z^{eta_u}" (a shift power and a clock power, the
+% letters xi_u, eta_u of that site), the sites inside X carry nothing. An arrow from the row of
+% boxes to the formula below reads "average over all letters (xi, eta) on X^c". The formula:
+% P_X M = |L|^{-2} sum_{xi,eta} V_{xi,eta} M V_{xi,eta}^*, and underneath "= the partial trace over
+% X^c, re-embedded: the phases kill the entries that differ off X, the shifts average the rest".
+% All labels are set in \small type.
+\begin{tikzpicture}[x=1.5cm,y=1cm,
+  site/.style={circle,draw,fill=white,inner sep=1.6pt,font=\small},
+  wbox/.style={draw,rectangle,inner sep=2pt,minimum height=0.5cm,font=\small,fill=Blue!15},
+  region/.style={rounded corners=4pt,draw,dashed,fill=none},
+  lab/.style={font=\small}]
+  \foreach \u in {0,1,4,5} { \node[wbox] at (\u,0.6) {$\shift^{\xi_\u}\clock^{\eta_\u}$}; }
+  \foreach \u in {0,...,5} { \node[site] at (\u,0) {\u}; }
+  \draw[region] (1.55,-0.4) rectangle (3.45,0.95);
+  \node[lab] at (2.5,-0.65) {$X$};
+  \node[lab] at (2.5,0.6) {$1$};
+  \draw[->,thick] (2.5,-0.85) -- (2.5,-1.3);
+  \node[lab,anchor=west] at (-0.4,-1.95) {$P_XM=\dfrac1{|\Omega_{X^c}|^2}\displaystyle\sum_{\xi,\eta}
+    V_{\xi,\eta}\,M\,V_{\xi,\eta}^*$,\quad $V_{\xi,\eta}=\prod_{u\notin X}\shift^{\xi_u}\clock^{\eta_u}$};
+  \node[lab,anchor=west] at (-0.4,-2.7) {phases: kill the entries with $s\not\sim_Xs'$};
+  \node[lab,anchor=west] at (-0.4,-3.15) {shifts: average the rest over the letters off $X$};
+\end{tikzpicture}

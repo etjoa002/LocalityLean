@@ -1,0 +1,14 @@
+.lake/
+*.olean
+*.ilean
+__pycache__/
+*.pyc
+docs/*/*.aux
+docs/*/*.fdb_latexmk
+docs/*/*.fls
+docs/*/*.log
+docs/*/*.out
+docs/*/*.synctex.gz
+docs/*/*.toc
+checks/out/*
+!checks/out/.gitkeep

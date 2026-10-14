@@ -1,0 +1,43 @@
+name = "LocalityLean"
+version = "0.1.0"
+keywords = ["math", "quantum", "lieb-robinson", "lattice-systems", "operator-algebras"]
+defaultTargets = ["LocalityLean"]
+
+[leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+maxSynthPendingDepth = 3
+
+# Versions: Lean v4.35.0-rc3, Mathlib c55e6e7, the sibling libraries at their rc3 commits.
+# They move together.
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0-rc3"
+
+# The foundation library: nets, regions and their orthogonality; at the commit LinearAQFT pins.
+[[require]]
+name = "LocalAlgebrasLean"
+git = "https://github.com/etjoa002/LocalAlgebrasLean"
+rev = "060af367814fd7fb05da03322e24890868e26178"
+
+[[require]]
+name = "LinearAQFT"
+git = "https://github.com/etjoa002/LinearAQFT"
+rev = "36540a74b0da66efe381d2637e77308cdc3374b8"
+
+[[require]]
+name = "BosonicLean"
+git = "https://github.com/etjoa002/BosonicLean"
+rev = "e2c2da8f31d4d85555c12cb1ef91957380e005b9"
+
+[[lean_lib]]
+name = "LocalityLean"
+moreLeanArgs = ["-j1"]
+
+# The sealed statements and their proofs (verify/); `lake comparator` reads both modules.
+[[lean_lib]]
+name = "Verify"
+srcDir = "verify"
+roots = ["Challenge", "Solution"]

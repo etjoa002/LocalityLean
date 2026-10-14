@@ -1,0 +1,36 @@
+% Figure 2: the probe-reset recursion. Transcription (for cheap agents): a tree. Root node
+% "C_{X,Y}(t)" (commutator of A(t) on X with a probe on Y). One Duhamel step splits it into
+% "2[X meets Y]" (the trivial bound when the regions meet; for disjoint regions the free term of
+% the Duhamel step is zero) plus, for each term i crossing Y (meeting Y and its complement), a
+% branch labelled "2 kappa_i int_0^t ... ds" leading to the node "C_{X,S_i}(s)" (the same
+% commutator with a probe on S_i). Branches whose S_i meets X stop with the trivial bound "<= 2";
+% the others split again in the same way. The sequence of patches along a root-to-leaf branch is
+% a first-contact path. Each branch label is written horizontally near the lower end of its
+% arrow, on the outer side (left of a left branch, right of a right branch), clear of the other
+% arrows; the free-term node sits higher, to the far left, with its note below it. The dashed
+% arrow to the further branches leaves the root to the right and turns down to the dots.
+\begin{tikzpicture}[x=1cm,y=1cm,
+  node/.style={draw,rounded corners=3pt,inner sep=4pt,font=\small,fill=white},
+  leaf/.style={node,draw=Blue,fill=Blue!6},
+  lab/.style={font=\scriptsize,fill=white,inner sep=1pt},
+  >={Stealth[length=5pt]}]
+\node[node] (root) at (0,0) {$C_{X,Y}(t)$};
+\node[node] (free) at (-5.4,-1.0) {$2\,\ind{X\cap Y\ne\emptyset}$};
+\node[lab,below=1pt of free,align=center] {free term\\ $=0$ when $X\cap Y=\emptyset$};
+\node[node] (i1) at (-1.9,-2.0) {$C_{X,S_{i_1}}(s)$};
+\node[node] (i2) at (1.9,-2.0) {$C_{X,S_{i_2}}(s)$};
+\node[font=\small] (dots) at (4.8,-2.0) {$\cdots$};
+\draw[->] (root) -- (free);
+\draw[->] (root) -- (i1) node[lab,pos=0.82,above left=1pt]{$2\kappa_{i_1}\!\int_0^t\!ds$};
+\draw[->] (root) -- (i2) node[lab,pos=0.82,above right=1pt]{$2\kappa_{i_2}\!\int_0^t\!ds$};
+\draw[->,dashed] (root.east) -| (dots.north);
+% second level under i1: one branch stops (meets X), one continues
+\node[leaf] (stop) at (-3.9,-4.0) {$\le2$ \ ($S_{j}\cap X\ne\emptyset$)};
+\node[node] (cont) at (0.1,-4.0) {$C_{X,S_{j'}}(s')$};
+\draw[->] (i1) -- (stop) node[lab,pos=0.82,above left=1pt]{$2\kappa_{j}\!\int_0^s\!ds'$};
+\draw[->] (i1) -- (cont) node[lab,pos=0.82,above right=1pt]{$2\kappa_{j'}\!\int_0^s\!ds'$};
+\draw[->,dashed] (cont) -- ++(0,-1.0) node[below,font=\scriptsize]{continues until a term meets $X$};
+\node[font=\scriptsize,align=left,anchor=west] at (2.4,-4.0)
+  {a root-to-leaf branch $Y\to S_{i_1}\to S_j$\\ is a first-contact path; its weight\\
+   $\prod 2\kappa$, the leaf bound $2$ and the\\ nested integrals give $2\,(2t)^k/k!\,\prod\kappa$};
+\end{tikzpicture}

@@ -1,0 +1,93 @@
+\section*{Notation}
+\addcontentsline{toc}{section}{Notation}
+
+\noindent\vetnew{A letter that serves more than one purpose is listed with each use.}
+
+\medskip
+\noindent\vet{\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.26\linewidth}>{\raggedright\arraybackslash}p{0.70\linewidth}@{}}
+\toprule
+Symbol & Meaning \\
+\midrule
+\endhead
+$\Lambda$ & \vetnew{the set of sites: any set in Chapters~\ref{sec:objects}--\ref{sec:closed} (finite where the matrix form needs it); a finite set in Chapters~\ref{sec:qudit}--\ref{sec:approx}} \\
+$X,Y\subseteq\Lambda$ & regions; $X$ carries the observable $a$, $Y$ the probe $b$ \\
+$\cA$ & the ambient C*-algebra; $\cA(X)$ the local algebra of $X$ (a net, monotone in $X$) \\
+$\comm{a}{b}$ & the commutator $ab-ba$; $\gcomm{a}{b}$ the graded bracket \vetnew{(Chapters~\ref{sec:fermions}--\ref{sec:limit}, to come)} \\
+$I$, $i\in I$ & the finite index set of the generator family \\
+$S_i\subseteq\Lambda$ & the support of the $i$-th generator, a finite set \\
+$L_i$, $L=\sum_i L_i$ & the local generators and their sum, bounded linear maps of $\cA$ \\
+$I^{\partial Y}$ & the terms whose support crosses $Y$ (meets $Y$ and its complement) \\
+$L^{\partial Y}$, $L'$ & the generator of the crossing terms, and that of the rest, the terms disjoint from $Y$ or inside $Y$ ($L'$ depends on $Y$) \\
+$\kappa_i\ge0$, $K=\sum_i\kappa_i$ & the strength of the $i$-th generator (hypothesis G1) and the total strength \\
+$J\subseteq I$, $L_J$ & a sub-family of indices and its generator $\sum_{i\in J}L_i$ \\
+$N_S(c)$ & the commutator seminorm $\sup\{\norm{\comm cb}:b\in\cA(S),\norm b\le1\}$ of $c\in\cA$ relative to the region $S$ \\
+$W,Z\subseteq\Lambda$ & further regions; $Z$ in definitions, $W$ in the support lemma \\
+$a,b,c$ & elements of $\cA$: the observable, the probe, and a general element \\
+$s$ & an intermediate time, $0\le s\le t$ \\
+$A(t)=e^{tL}a$, $B(t)=e^{tL}b$ & the evolved observable and probe, $t\ge0$ in Chapters~\ref{sec:master}--\ref{sec:closed} and all real $t$ for a contractive negation; $e^{\ii tH}ae^{-\ii tH}$ in the Hamiltonian case \\
+$f$\vetnew{; $f_0,f_1,f_2$} & an auxiliary function inside a proof; in the sources' route, $f(t)=\comm{\tau_t(A)}{B}$ with the sources' capital letters\vetnew{; the coefficients of the evolved observable in Example~\ref{ex:chain}} \\
+$\sigma^x,\sigma^y,\sigma^z$; $\sigma^x_u$ & the Pauli matrices (written out in Chapter~\ref{sec:qudit}); $\sigma^x$ at the site $u$ \\
+$C_{X,Y}(t)$ & $\sup\{\norm{\comm{e^{tL}a}{b}}:a\in\cA(X),b\in\cA(Y),\norm a,\norm b\le1\}$ \\
+\vetnew{$\ind{P}$} & \vetnew{the indicator of a condition $P$: $1$ if it holds and $0$ otherwise (Chapter~\ref{sec:master})} \\
+$\beta_i$ & a continuous majorant of $N_{S_i}(A(s))$ in Theorem~\ref{thm:onestep} \\
+$\pi=(i_1,\dots,i_k)$ & a path of length $k$ from $Y$ to $X$; $w(\pi)=\prod_j\kappa_{i_j}$ its weight \\
+$P_k(Y,X)$ & $\sum_\pi w(\pi)$ over the paths of length $k$ \\
+$\gamma_k(t)$, $B_n(Y,X,t)$ & the coefficient $(2t)^{k+1}/(k+1)!$ and the truncated bound of Theorem~\ref{thm:iteration} \\
+\vetnew{$\mathbb B$; $R,Q,G$} & \vetnew{the Banach algebra of Duhamel's identity (a complete normed unital real algebra); elements of it in the identity and its proof} \\
+$E,M$ & a Banach space and a closed subspace in the invariance lemma \\
+$H$, $\Phi$, $\tau_t$ & a Hamiltonian, the sources' interaction, and their Heisenberg dynamics; in Chapter~\ref{sec:qudit}, $H=\sum_i\Phi_i$ \\
+$h=(h_{uu'})$ & the site matrix, $h_{uu'}=\sum_{i:\,u,u'\in S_i}\kappa_i$ (Chapter~\ref{sec:closed}) \\
+$T$; $\partial Y$ & the touched sites $\bigcup_iS_i$; the boundary of $Y$, its sites touched by a term crossing $Y$ \\
+\vetnew{$\dist(\bd Y,X\cap T)$} & \vetnew{the smallest distance $d(y,x)$ from a site $y$ of the boundary $\bd Y$ to a site $x$ of $X\cap T$ (Chapter~\ref{sec:closed})} \\
+$w_k(y,x)$, $W_k(Y,X)$\vetnew{; $w_k(z,X)$} & the walk weights and their sum over $\partial Y\times(X\cap T)$\vetnew{; the sum of $w_k(z,x)$ over $x\in X\cap T$} (Chapter~\ref{sec:closed}) \\
+$Q$; $r$ & in Chapter~\ref{sec:closed}: the terms crossing $Y$ and missing $X$; the number of steps a walk needs to reach $X$ \\
+$F_0$, $T'$ & a decay function of the distance, and a finite set of sites in the reproducing property \\
+$K_1$ & $\sum_i\kappa_i|S_i|$, a bound on the row sums of $h$ \\
+$N_F$, $\Sigma_F(Y,X)$ & an $F$-bound of the family ($h\le N_FF$) and the \vetnew{sum of $F$} over $\partial Y\times(X\cap T)$ \\
+$g$, $\ell$, $p$, $\rho$ & bounded geometry: terms per site, strength, support size, support diameter \\
+$\chi_i(u)$ & the indicator $\ind{u\in S_i}$ of a support \\
+$d(u,u')$; $q$ & the distance of a bounded geometry ($d(u,u)=0$ and the triangle inequality); a bound on the row sums of $h$ \\
+$\lambda$ & the decay rate of the \vetnew{decay function} in the chain example (Chapter~\ref{sec:closed}) \\
+$F$, $C_F$, $\norm{\Phi}_F$ & a decay function, its reproducing constant, the $F$-norm of an
+interaction (Chapter~\ref{sec:closed}) \\
+$v$, $\mu$ & the velocity $2g\ell p$ of the bounded-geometry bound and the decay rate of the light cone (Chapter~\ref{sec:closed}) \\
+\vetnew{$x$, $y$} & \vetnew{sites (Chapters~\ref{sec:closed}--\ref{sec:approx}); $x$ also a nonnegative real in Lemma~\ref{lem:tail} and the proof of Theorem~\ref{thm:cone}; in the first half of Chapter~\ref{sec:qudit} also elements of $\cA$, in $\mathrm L_x$, $\mathrm R_y$, $\ad_x$} \\
+$\mathrm L_x$, $\mathrm R_x$ & the left and right multiplications by $x$ (Chapter~\ref{sec:qudit}) \\
+$\ad_x$ & the derivation $a\mapsto\ii\comm xa$ \\
+$\Phi_i$, $H_J$, $U_t$ & the terms of a Hamiltonian family, the Hamiltonian of a sub-family, and the unitary $e^{\ii tH}$ \\
+$\Omega_u$, $\Omega$; $n$ & the alphabet at the site $u$, a uniform alphabet; the dimension of a qudit, $\Omega_u=\{0,\dots,n-1\}$ ($n$ is also the length of a chain in the examples) \\
+$s$, $s\sim_Xs'$, $s|_X$ & a configuration; agreement off $X$; the restriction to $X$ \\
+\vetnew{$r$, $r'$} & \vetnew{configurations, in Chapter~\ref{sec:qudit}} \\
+\vetnew{$M$, $N$} & \vetnew{matrices of the qudit algebra (Chapters~\ref{sec:qudit}--\ref{sec:approx})} \\
+\vetnew{$m$; $m_i$} & \vetnew{a matrix on the letters of a region; the matrices of a qudit interaction (Chapter~\ref{sec:qudit})} \\
+$\xi$, $\eta$; $(\xi,s|_{X^c})$ & choices of letters on a region ($X$ in Chapter~\ref{sec:qudit}, the complement $Y=X^c$ in Chapter~\ref{sec:approx}); the configuration with the letters $\xi$ on $X$ and those of $s$ off $X$ \\
+\vetnew{$(s|_X,\eta)$} & \vetnew{the configuration with the letters of $s$ on $X$ and $\eta$ off $X$ (Chapter~\ref{sec:approx})} \\
+$l$, $l'$ & letters of one cyclic alphabet $\Z_n$, indexing the clock and shift matrices and the character sum (Chapter~\ref{sec:approx}) \\
+\vetnew{$q_u$} & \vetnew{the order of the cyclic alphabet $\Omega_u=\Z_{q_u}$ at the site $u$ (Chapter~\ref{sec:approx})} \\
+$\omega_k(t)$ & the walk term $(2t)^{k+1}W_{k+1}(Y,X)/(k+1)!$ \vetnew{of the pair $(Y,X)$, $k\ge0$ (Chapter~\ref{sec:closed}, used in Chapter~\ref{sec:approx})} \\
+$\zeta$; $\Theta$ & re-indexed letters in the twirl proof; the conjugation $a\mapsto\Gamma a\Gamma$ of the dephasing proof (Chapter~\ref{sec:approx}) \\
+$\alpha$; $D(X,Y)$ & the exponent of the \vetnew{polynomial decay function $F_0(r)=(1+r)^{-\alpha}$}; the smaller of the two boundary sums in the sources' bound (Chapter~\ref{sec:qudit}) \\
+$\Mat_\Lambda$ & the qudit algebra, the matrices indexed by configurations \\
+$\iota_Xm$ & the embedding of a matrix on the letters of $X$ (the sources' $m\otimes1$) \\
+$m_u$ & the single-site operator, $m$ at the site $u$ and the identity elsewhere \\
+$M^\varphi$, $F_\mu$ & the relabelling of a matrix by a bijection $\varphi$ of the sites; the \vetnew{weighted decay function} $e^{-\mu d}F$ \\
+$\norm F$ & \vetnew{$\sup_x\sum_yF(x,y)$, the uniform integrability of a decay function} (Chapter~\ref{sec:qudit}) \\
+$\nu$ & the dimension of the lattice $\Z^\nu$ \vetnew{(Chapters~\ref{sec:closed}--\ref{sec:qudit})} \\
+$\theta$ & the parity automorphism of a graded net \vetnew{(Chapters~\ref{sec:fermions}--\ref{sec:limit}, to come)} \\
+$P_X$ & the conditional expectation onto $\cA(X)$, the normalized partial trace over $X^c$ re-embedded, equal to the finite twirl (Chapter~\ref{sec:approx}) \\
+$\Omega_Y$, $|\Omega_Y|$ & the letters on a region $Y$ and their number (Chapter~\ref{sec:approx}) \\
+$e_n(k)$ & the character $e^{2\pi\ii k/n}$ of $\Z_n$ (Chapter~\ref{sec:approx}) \\
+$V$, $\Lambda'$, $\bar a$ & \vetnew{the phase space $\Lambda\to\R^2$ of harmonic bosons, its coordinates $\Lambda\times\{q,p\}$, the other coordinate at the site of $a$ (Chapter~\ref{sec:harmonic})} \\
+$\sigma$, $\Omega$ & \vetnew{the symplectic form $\sum_x(f^q_xg^p_x-f^p_xg^q_x)=f\cdot\Omega g$ and its matrix (Chapter~\ref{sec:harmonic}); $\Omega_u$ is the alphabet of a site in Chapter~\ref{sec:qudit}} \\
+$W(f)$ & \vetnew{the Weyl operator of $f\in V$, with $W(f)W(g)=e^{-\ii\sigma(f,g)/2}W(f+g)$ (Chapter~\ref{sec:harmonic})} \\
+$K$, $T_t$, $\alpha_t$ & \vetnew{a quadratic generator ($K^{\mathsf T}\Omega+\Omega K=0$), its flow $e^{tK}$ and the dynamics $W(f)\mapsto W(T_tf)$ (Chapter~\ref{sec:harmonic}); $K$ is the total strength in Chapter~\ref{sec:master}} \\
+$|K|$, $R$, $v$ & \vetnew{the entrywise absolute value of a matrix, the range and the row sum of a generator (Chapter~\ref{sec:harmonic})} \\
+$\clock$, $\shift$ & the clock and shift matrices of a cyclic alphabet (Chapter~\ref{sec:approx}) \\
+$\psi_\eta$, $V_{\xi,\eta}$ & the clock phase of the letters $\eta$ and the Weyl unitary of the letters $\xi,\eta$ on a region (Chapter~\ref{sec:approx}) \\
+$\mathcal T$, $\mathcal N$, $\varepsilon$ & a map of $\cA$, a neighbourhood map of regions, and the error of $\varepsilon$-locality (Chapter~\ref{sec:approx}) \\
+\vetnew{$\varepsilon(t)$, $\varepsilon_r(t)$} & \vetnew{the errors of $\varepsilon$-locality of $e^{tL}$, for a neighbourhood map $\mathcal N$ and for the $r$-neighbourhood (Chapter~\ref{sec:approx})} \\
+\vetnew{$X'$} & \vetnew{the larger region $X'\supseteq X$ of the truncated dynamics, with $Y=X'^c$ (Chapter~\ref{sec:approx})} \\
+$O$, $O^{+r}$ & a region carrying an observable in the locality condition, and its $r$-neighbourhood (Chapter~\ref{sec:approx}) \\
+$\Gamma_j$\vetnew{, $\Gamma_{ij}$}, $\Delta_\Gamma$, $L_S$ & the jump operators of a Lindblad term \vetnew{and those of the $i$-th term of a Lindblad family}, the dissipator of one jump, and the generator of the term (Chapter~\ref{sec:approx}) \\
+\bottomrule
+\end{longtable}}

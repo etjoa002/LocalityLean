@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this library, please cite it as below."
+type: software
+title: "LocalityLean: Lieb–Robinson bounds for quantum lattice systems in Lean"
+authors:
+  - family-names: Tjoa
+    given-names: Erickson
+license: Apache-2.0
+repository-code: "https://github.com/etjoa002/LocalityLean"

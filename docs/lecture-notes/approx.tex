@@ -1,0 +1,554 @@
+\section{Local approximation and open systems}\label{sec:approx}
+
+\motiv{\vet{The bounds of the previous chapters control the commutator of an evolved observable
+$A(t)$ with every observable of a distant region. Physically one wants a stronger-looking
+statement: that $A(t)$ \emph{is}, up to a small error, an observable of a bounded region, one
+that grows at the velocity of the bound. The two statements are equivalent up to constants, and
+the device that converts one into the other is a conditional expectation $P_X$ onto the local algebra of a
+region: a linear map that projects every observable onto its part living in $X$. This chapter
+builds $P_X$ on the qudit lattice as a finite average over unitaries of the complement,
+\vetnew{identifies it, in the tensor-product picture, with the normalized partial trace}, and proves that the distance from $M$ to $\cA(X)$ is
+controlled by the commutators of $M$ with the complement, with constants $1$ and $2$. The
+evolved observable is then within a light-cone tail of a local one, and the dynamics is an
+\emph{approximate cellular automaton}: it maps the observables of $O$ into those of a
+neighbourhood of $O$, up to an error.
+
+The second theme is dissipation. A quantum system coupled to an environment evolves, in the
+Heisenberg picture, under a Lindblad generator: a Hamiltonian part and jump terms. Such a
+generator built from local pieces satisfies the hypotheses of the path-sum bound, with the
+contraction of its sub-families, a consequence of complete positivity, carried as the one
+hypothesis not reproved here: locality in the argument comes from a one-line commutator
+identity, and the conditional expectation gives a second route to it with the norm of the term
+as strength. The bound and its closed forms for $t\ge0$ therefore hold for open systems with no
+new analysis.}}
+
+\subsection{Nets with local approximation}
+
+\vet{Throughout, $\cA$ is a unital C*-algebra, nontrivial where a unitary has to have norm one,
+with a net $Z\mapsto\cA(Z)$ over the subsets of a set of sites $\Lambda$, causal where stated
+(Definition~\ref{def:net}), and $N_S(c)$ is the commutator seminorm of Chapter~\ref{sec:objects}.}
+
+\begin{definition}[local approximation]\label{def:localapprox}
+\vet{The net has \emph{local approximation} if every region $X$ carries a map
+$P_X:\cA\to\cA$ with
+\begin{equation}\label{eq:localapprox}
+  P_Xc\in\cA(X)\qquad\text{and}\qquad\norm{c-P_Xc}\le N_{X^c}(c)\qquad(c\in\cA).
+\end{equation}
+A map $\mathcal T:\cA\to\cA$ is \emph{$\varepsilon$-local with the neighbourhood map
+$\mathcal N$} (a map from regions to regions) if for every region $O$ and every \vetnew{$c\in\cA(O)$
+there is $c'\in\cA(\mathcal N(O))$ with $\norm{\mathcal Tc-c'}\le\varepsilon\norm c$}.}
+\end{definition}
+
+\vet{The inequality in \eqref{eq:localapprox} says that an element commuting with
+everything outside $X$ up to $\varepsilon$ is within $\varepsilon$ of an element of $\cA(X)$: a
+statement about commutators becomes a statement about distance to a subalgebra. At $X=\Lambda$
+it forces $P_\Lambda c=c$ whenever $\cA(\emptyset)$ consists of scalars, so a net with local
+approximation has $\cA(\Lambda)=\cA$, \vetnew{as the qudit net does}. The converse holds on every
+causal net, with the factor $2$ of the commutator.}
+
+\needspace{12\baselineskip}
+\begin{proposition}[the converse estimate; the exact case]\label{prop:converse}
+\vet{\begin{enumerate}[label=(\alph*),nosep]
+\item On a causal net, if \vetnew{$c'\in\cA(X)$} and $Y$ is disjoint from $X$, then
+  \vetnew{$N_Y(c)\le2\norm{c-c'}$} for every $c$. On a causal net with local approximation,
+  $N_{X^c}(c)\le2\norm{c-P_Xc}$.
+\item $\mathcal T$ is $0$-local with $\mathcal N$ if and only if
+  $\mathcal T(\cA(O))\subseteq\cA(\mathcal N(O))$ for every $O$; this is the locality condition
+  of a quantum cellular automaton with the neighbourhood $\mathcal N(O)$.
+\end{enumerate}}
+\end{proposition}
+
+\begin{proof}
+\vet{\begin{enumerate}[label=(\alph*),nosep]
+\item For $b\in\cA(Y)$ with $\norm b\le1$, \vetnew{$c'$} and $b$ commute by causality, so
+  \vetnew{$\comm cb=\comm{c-c'}b$ and $\norm{\comm cb}\le2\norm{c-c'}$}; take the supremum over $b$.
+\item At $\varepsilon=0$ the condition reads \vetnew{$\mathcal Tc=c'$ for some
+  $c'\in\cA(\mathcal N(O))$}.\qedhere
+\end{enumerate}}
+\end{proof}
+
+\subsection{The conditional expectation on the qudit lattice}
+
+\vet{Let $\Lambda$ be finite with finite nonempty alphabets $\Omega_u$, and $\Mat_\Lambda$ the qudit
+algebra of Chapter~\ref{sec:qudit}. For a region $X$ write $\Omega_{X^c}$ for the letters on the
+complement and, for $\eta\in\Omega_{X^c}$ and a configuration $s$, $(s|_X,\eta)$ for the
+configuration with the letters of $s$ on $X$ and $\eta$ off $X$.}
+
+\begin{definition}[conditional expectation]\label{def:condexp}
+\vet{The \emph{conditional expectation} onto $X$ is the linear map $P_X$ of $\Mat_\Lambda$ with
+\begin{equation}\label{eq:condexp}
+  (P_XM)_{ss'}:=\ind{s\sim_Xs'}\;\frac1{|\Omega_{X^c}|}\sum_{\eta\in\Omega_{X^c}}
+  M_{(s|_X,\eta),\,(s'|_X,\eta)} .
+\end{equation}}
+\end{definition}
+
+\vet{In the tensor-product picture this is the normalized partial trace over the complement,
+re-embedded as $|\Omega_{X^c}|^{-1}\tr_{X^c}M\otimes1$: the entry at $(s,s')$ averages the entries of
+$M$ between the pairs that agree with $s$, $s'$ on $X$ and carry the same letters off $X$. The formula makes sense for any finite alphabets.}
+
+\begin{proposition}[properties of the conditional expectation]\label{prop:condexp}
+\vet{\begin{enumerate}[label=(\alph*),nosep]
+\item $P_XM$ is local to $X$, and $P_XM=M$ when $M$ is local to $X$; so $P_X\circ P_X=P_X$.
+\item $P_X$ is linear, $P_X1=1$ and $(P_XM)^*=P_X(M^*)$.
+\item $P_\Lambda=\mathrm{id}$ and $P_\emptyset M=\tfrac{\tr M}{|\Omega_\Lambda|}\,1$.
+\end{enumerate}}
+\end{proposition}
+
+\begin{proof}
+\vet{\begin{enumerate}[label=(\alph*),nosep]
+\item The entry \eqref{eq:condexp} vanishes unless $s\sim_Xs'$ and depends on $s$, $s'$ through
+  $s|_X$, $s'|_X$: the two conditions of Definition~\ref{def:localmatrix}. If $M$ is local to
+  $X$ and $s\sim_Xs'$, every term of the sum equals $M_{ss'}$, because
+  $(s|_X,\eta)\sim_X(s'|_X,\eta)$ with the same restrictions to $X$ as $s$, $s'$; the average
+  of $|\Omega_{X^c}|$ copies of $M_{ss'}$ is $M_{ss'}$. If $s\not\sim_Xs'$ both sides vanish.
+\item Linearity is termwise; $1$ is local to every region; the conjugate of the average is the
+  average of the conjugates, and $s\sim_Xs'$ is symmetric.
+\item For $X=\Lambda$ there is one letter $\eta$ off $X$, the empty one, and
+  $(s|_\Lambda,\eta)=s$. For $X=\emptyset$ the condition $s\sim_\emptyset s'$ is $s=s'$ and
+  $\eta$ runs over all configurations.\qedhere
+\end{enumerate}}
+\end{proof}
+
+\vet{Two properties remain: that $P_X$ is a contraction, and the estimate \eqref{eq:localapprox}.
+Both come from a second expression of $P_X$, as an average of unitary conjugations, which needs
+a group structure on the alphabets. From here on each alphabet is cyclic, $\Omega_u=\Z_{q_u}$
+with $q_u\ge1$ (every finite alphabet is one up to a renaming of its letters), and letters are
+added modulo $q_u$ at each site. Write $e_n(k):=e^{2\pi\ii k/n}$ for $k\in\Z_n$; it is a
+character, $e_n(k+k')=e_n(k)e_n(k')$, with $e_n(k)^n=1$ and
+$\overline{e_n(k)}=e_n(-k)$.}
+
+\needspace{12\baselineskip}
+\begin{proposition}[characters, clock and shift]\label{prop:clockshift}
+\vet{For $n\ge1$ and $k\in\Z_n$,
+\begin{equation}\label{eq:charsum}
+  \sum_{l\in\Z_n}e_n(lk)=n\,\ind{k=0}.
+\end{equation}
+The \emph{clock} $\clock$ and the \emph{shift} $\shift$ are the $n\times n$ matrices
+$\clock_{ll'}=e_n(l)\ind{l=l'}$, $\shift_{ll'}=\ind{l=l'+1}$; \vetnew{they satisfy
+$\shift\shift^*=1$} and $\clock\shift=e_n(1)\,\shift\clock$.}
+\end{proposition}
+
+\begin{proof}
+\vet{If $k=0$ every term of \eqref{eq:charsum} is $1$. Otherwise $e_n(k)\ne1$ is an $n$-th root
+of unity, so the geometric sum $\sum_{l<n}e_n(k)^l=(e_n(k)^n-1)/(e_n(k)-1)$ vanishes.
+\vetnew{The shift is a permutation matrix, so $\shift\shift^*=1$}, and
+$(\clock\shift)_{ll'}=e_n(l)\ind{l=l'+1}=e_n(1)e_n(l')\ind{l=l'+1}=e_n(1)(\shift\clock)_{ll'}$.}
+\end{proof}
+
+\vetnew{Both matrices are unitary: the clock is diagonal with unimodular entries, and the
+shift, a permutation matrix, satisfies $\shift^*\shift=1$ as well.}
+
+\vet{On a region $Y$ the products of clock and shift powers over the sites of $Y$ form the
+\emph{Weyl unitaries}; we define them directly by their entries, which is what every proof
+uses (Figure~\ref{fig:twirl}). \vetnew{The average of the conjugations by the Weyl unitaries of
+the complement of $X$ is a \emph{twirl}, the standard name in quantum information for an average
+of conjugations over a group of unitaries; it will be $P_X$.} For letters $\xi\in\Omega_Y$ and a configuration $s$, $s+\xi$
+is the configuration with $s(u)+\xi(u)$ on $Y$ and $s(u)$ off $Y$, and $s-\xi$ likewise; $s-s'$
+is the sitewise difference of two configurations, of which the phase $\psi_\eta$ sees the
+letters on $Y$ only.}
+
+\begin{figure}[t]
+\centering
+\input{figures/twirl}
+\caption{\vet{The twirl onto $X=\{2,3\}$ on a chain of six sites. Each site off $X$ carries a
+shift power and a clock power, with the letters $\xi_u$, $\eta_u$ of that site; the sites of $X$
+carry the identity. Averaging $V_{\xi,\eta}MV_{\xi,\eta}^*$ over all letters off $X$ gives the
+conditional expectation \eqref{eq:condexp}: the clock phases cancel every entry between
+configurations that differ off $X$, and the shifts average the remaining entries over the
+letters off $X$ (Theorem~\ref{thm:twirl}).}}
+\label{fig:twirl}
+\end{figure}
+
+\begin{definition}[Weyl unitaries, twirl]\label{def:weyl}
+\vet{For a region $Y$ and letters $\xi,\eta\in\Omega_Y$, the \emph{Weyl unitary} $V_{\xi,\eta}$ is
+the matrix
+\begin{equation}\label{eq:weyl}
+  (V_{\xi,\eta})_{ss'}:=\ind{s=s'+\xi}\;\psi_\eta(s'),\qquad
+  \psi_\eta(s):=\prod_{u\in Y}e_{q_u}\bigl(\eta(u)\,s(u)\bigr),
+\end{equation}
+the shift by $\xi$ applied after the clock phases $\psi_\eta$. The \emph{twirl} onto $X$ is the
+average over the Weyl unitaries of the complement $Y=X^c$,
+\begin{equation}\label{eq:twirl}
+  \frac1{|\Omega_{Y}|^2}\sum_{\xi\in\Omega_Y}\sum_{\eta\in\Omega_Y}V_{\xi,\eta}\,M\,V_{\xi,\eta}^* .
+\end{equation}}
+\end{definition}
+
+\begin{proposition}[Weyl unitaries]\label{prop:weyl}
+\vet{$V_{\xi,\eta}$ is local to $Y$ and unitary, and for every $M$ and configurations $s,s'$
+\begin{equation}\label{eq:weylconj}
+  (V_{\xi,\eta}MV_{\xi,\eta}^*)_{ss'}=\psi_\eta(s-s')\;M_{s-\xi,\,s'-\xi} .
+\end{equation}}
+\end{proposition}
+
+\begin{proof}
+\vet{The phase $\psi_\eta(s)$ depends on $s|_Y$ only and is multiplicative in $s$, with
+$\overline{\psi_\eta(s)}=\psi_\eta(-s)$ and $|\psi_\eta|=1$. The entry \eqref{eq:weyl} vanishes
+unless $s\sim_Ys'$, since $s'+\xi\sim_Ys'$, and depends on the restrictions to $Y$ alone; so
+$V_{\xi,\eta}$ is local to $Y$. In $V^*V$ and $VV^*$ the sums over the middle configuration
+have one term, at $s+\xi$ and at $s-\xi$ respectively, where the phase meets its conjugate; both
+products are the identity. In $(VMV^*)_{ss'}=\sum_{r,r'}V_{sr}M_{rr'}\overline{V_{s'r'}}$ the
+only term is $r=s-\xi$, $r'=s'-\xi$, with the phase
+$\psi_\eta(s-\xi)\overline{\psi_\eta(s'-\xi)}=\psi_\eta(s-s')$, the $\xi$ cancelling.}
+\end{proof}
+
+\needspace{10\baselineskip}
+\begin{theorem}[the twirl is the conditional expectation]\label{thm:twirl}
+\vet{For cyclic alphabets the twirl \eqref{eq:twirl} onto $X$ equals $P_XM$ for every $M$.}
+\end{theorem}
+
+\begin{proof}
+\vet{By \eqref{eq:weylconj} the entry of the twirl at $(s,s')$ is
+\[
+  \frac1{|\Omega_Y|^2}\sum_{\xi}M_{s-\xi,s'-\xi}\sum_{\eta}\psi_\eta(s-s'),\qquad\text{and}\qquad
+  \sum_\eta\psi_\eta(s-s')=\prod_{u\in Y}\;\sum_{l\in\Z_{q_u}}e_{q_u}\bigl(l\,(s(u)-s'(u))\bigr)
+\]
+equals $|\Omega_Y|\,\ind{s\sim_Xs'}$ by \eqref{eq:charsum} at each site. For $s\sim_Xs'$ the letters of $s$ and $s'$ off $X$ agree,
+so $s-\xi=(s|_X,\zeta)$ and $s'-\xi=(s'|_X,\zeta)$ with $\zeta:=s|_Y-\xi$, and as $\xi$ runs over
+$\Omega_Y$ so does $\zeta$. The remaining sum is that of \eqref{eq:condexp}, with the
+normalization $|\Omega_Y|/|\Omega_Y|^2=1/|\Omega_Y|$.}
+\end{proof}
+
+\needspace{10\baselineskip}
+\begin{proposition}[contraction and bimodule property]\label{prop:bimodule}
+\vet{For cyclic alphabets, $\norm{P_XM}\le\norm M$, and $P_X(aMb)=a\,(P_XM)\,b$ for
+$a,b\in\cA(X)$.}
+\end{proposition}
+
+\begin{proof}
+\vet{Each term $V_{\xi,\eta}MV_{\xi,\eta}^*$ of the twirl has the norm of $M$, and the norm of an
+average is at most the average of the norms. For $a,b\in\cA(X)$ and $V$ local to $X^c$,
+$V(aMb)V^*=a(VMV^*)b$ by causality (Theorem~\ref{thm:quditnet}), termwise in the average.}
+\end{proof}
+
+\begin{theorem}[local approximation]\label{thm:localapprox}
+\vet{For cyclic alphabets, every $M\in\Mat_\Lambda$ and every region $X$,
+\begin{equation}\label{eq:localapproxqudit}
+  \norm{M-P_XM}\le N_{X^c}(M)\le2\,\norm{M-P_XM}.
+\end{equation}
+The qudit net with cyclic alphabets has local approximation with $P_X$.}
+\end{theorem}
+
+\begin{proof}
+\vet{Since $VV^*=1$, $M-VMV^*=\comm MV\,V^*$ for each Weyl unitary $V$ of the complement, so
+$M-P_XM$ is the average of the $\comm MV\,V^*$. Each has norm at most
+$\norm{\comm MV}\le N_{X^c}(M)$, because $V\in\cA(X^c)$ has norm one; so does the average. The
+second inequality is Proposition~\ref{prop:converse}(a) with \vetnew{$c=M$ and
+$c'=P_XM\in\cA(X)$}.}
+\end{proof}
+
+\vet{The constant $2$ is attained: for a single qubit outside $X$ and $M=\sigma^x$ at that site,
+$P_XM=0$, $\norm{M-P_XM}=1$, and $N_{X^c}(M)=2$ (at least $\norm{\comm{\sigma^x}{\sigma^z}}=2$,
+at most $2\norm M$). The constant $1$ is approached along the following family:
+for $X=\emptyset$, \vetnew{one site with an alphabet of $n\ge2$ letters} and $M$ a rank-one
+projection $|e\rangle\langle e|$, \vetnew{$\norm{M-P_\emptyset M}=1-1/n$} while $N_\Lambda(M)=1$ (the commutator of a projection with an
+element of norm at most one has two off-diagonal blocks of norm at most one, and
+$|e\rangle\langle f|+|f\rangle\langle e|$ with $f\perp e$ gives one).}
+
+\subsection{Truncated dynamics and the approximate automaton}
+
+\vet{Let $(S_i,L_i,\kappa_i)_{i\in I}$ be a family of local generators on a causal net with local
+approximation, $A(t)=e^{tL}a$ for $a\in\cA(X)$, and let $X'\supseteq X$ be a larger region. The
+walk bound of Chapter~\ref{sec:closed} controls the commutator of $A(t)$ with every observable
+of $Y:=X'^c$; local approximation turns this into a distance.}
+
+\needspace{14\baselineskip}
+\begin{theorem}[truncated dynamics]\label{thm:truncated}
+\vet{For $a\in\cA(X)$, $X\subseteq X'$, $Y=X'^c$ and $t\ge0$, with \vetnew{the walk terms $\omega_k(t)$ of Chapter~\ref{sec:closed} for the pair $(Y,X)$,
+eq.~\eqref{eq:walkterms}},
+\begin{equation}\label{eq:truncated}
+  \norm{A(t)-P_{X'}A(t)}\le N_Y(A(t))\le2\norm a\sum_{k\ge0}\omega_k(t).
+\end{equation}
+Under bounded geometry $(g,\ell,p,\rho)$ with distance $d$ and $v=2g\ell p$, if
+$(r-1)\rho<d(y,x)$ for all $y\in\bd Y$ and $x\in X\cap T$ (an integer $r\ge1$), the right side is
+at most
+$2\norm a\,|\bd Y|\,(vt)^re^{vt}/r!$ and, for every real $\mu$, at most
+$2\norm a\,|\bd Y|\,e^{vt}e^{-\mu r}(e^{e^\mu vt}-1)$.}
+\end{theorem}
+
+\begin{proof}
+\vet{The first inequality is local approximation. For the second, $N_Y(A(t))$ is the supremum
+of $\norm{\comm{A(t)}b}$ over $b\in\cA(Y)$ with $\norm b\le1$, and the walk bound
+(Theorem~\ref{thm:walkseries}) gives $2\norm a\norm b\,(\ind{X\cap Y\ne\emptyset}+\sum_k\omega_k(t))$
+with $X\cap Y=\emptyset$. The geometric forms are those of Chapter~\ref{sec:closed} for the
+walk series.}
+\end{proof}
+
+\vet{So $P_{X'}A(t)$ is an observable of $X'$ within a light-cone tail of $A(t)$. Read as a
+property of the map $e^{tL}$, this is approximate locality with a neighbourhood map. The
+natural map is the $r$-neighbourhood $O^{+r}:=\{w:\,d(w,x)<r\rho\text{ for some }x\in O\}$,
+measured from the site into the region (the distance need not be symmetric).}
+
+\needspace{10\baselineskip}
+\begin{corollary}[approximate automaton]\label{cor:automaton}
+\vet{\begin{enumerate}[label=(\alph*),nosep]
+\item For $\Lambda$ finite and a neighbourhood map $\mathcal N$ with $O\subseteq\mathcal N(O)$
+  for all $O$, $e^{tL}$ is $\varepsilon(t)$-local with $\mathcal N$, where $\varepsilon(t)$ is
+  the largest, over the finitely many regions $O$, of the errors $2\sum_k\omega_k(t)$ of the
+  pairs $(\mathcal N(O)^c,O)$.
+\item Under bounded geometry with $\rho>0$ and an integer $r\ge1$, $e^{tL}$ is
+  \vetnew{$\varepsilon_r(t)$-local with $O\mapsto O^{+r}$, where $\varepsilon_r(t)$ is either of}
+  \begin{align}
+    \varepsilon_r(t)&=2|T|\,\frac{(vt)^r}{r!}e^{vt},\label{eq:epsr}\\
+    \varepsilon_r(t)&=2|T|\,e^{vt}e^{-\mu r}\bigl(e^{e^\mu vt}-1\bigr)\qquad(\mu\in\R).\label{eq:epsrcone}
+  \end{align}
+\end{enumerate}}
+\end{corollary}
+
+\begin{proof}
+\vet{\begin{enumerate}[label=(\alph*),nosep]
+\item For $c\in\cA(O)$ take $P_{\mathcal N(O)}e^{tL}c$ as the nearby element of
+  Definition~\ref{def:localapprox} and apply \eqref{eq:truncated} with $X=O$,
+  $X'=\mathcal N(O)$; the maximum over $O$ makes the error uniform.
+\item $O\subseteq O^{+r}$ since $d(u,u)=0<r\rho$. A site $w\notin O^{+r}$ has $d(w,u)\ge r\rho
+  >(r-1)\rho$ for every $u\in O$, so the geometric form applies, and $|\bd Y|\le|T|$ because the
+  boundary consists of touched sites.\qedhere
+\end{enumerate}}
+\end{proof}
+
+\vetnew{At fixed $t$ the first error of (b) vanishes as $r\to\infty$, since $(vt)^r/r!\to0$, and
+the second, for $\mu>0$, is at most $2|T|\,e^{(1+e^\mu)vt-\mu r}$, so exponentially small in $r$
+once $r>(1+e^\mu)vt/\mu$: up to time $t$ the dynamics is a cellular automaton with the
+neighbourhood $O^{+r}$, $r$ of order $vt$, up to an exponentially small error.}
+
+\begin{example}[truncation on a chain]\label{ex:truncation}
+\vet{On a chain of five qubits with $H=\sum_{u=0}^{3}\bigl(\sigma^z_u\sigma^z_{u+1}
++\tfrac12\sigma^x_u\sigma^x_{u+1}\bigr)$ and $a=\sigma^x_0$, the error
+$\norm{A(t)-P_{X_r}A(t)}$ for $X_r=\{0,\dots,r\}$ against the walk bound \eqref{eq:truncated}:
+at $t=0.3$ the error is $0.56$, $0.086$, $0.017$ for $r=0,1,2$, against the bounds $9.6$, $4.6$,
+$1.4$; at $t=0.1$ and $r=2$ the error is $6.6\cdot10^{-4}$ against $1.6\cdot10^{-2}$. The error
+decays with $r$ as the bound predicts; the bound overshoots by factors between $17$ and $82$ at
+these times, and the first two bounds quoted exceed the trivial bound $2\norm a$. For
+$X_r=\Lambda$ the error is zero, as $A(t)$ is then local to $X_r$.}
+
+\vetnew{On twelve qubits with the same Hamiltonian and observable the light cone is visible
+(Figure~\ref{fig:longchain}). At $t=0.25$, $0.5$, $1$, $2$ the error falls below $0.1$ from
+$r=1$, $2$, $4$, $7$ on: a front moving at about $3.5$ sites per unit time. Beyond the front the
+error decays by a constant factor per site, as $e^{-3.07r}$, $e^{-2.38r}$, $e^{-1.66r}$,
+$e^{-0.86r}$ at the four times (least squares over $r=3,\dots,10$), the rate falling as the
+front approaches.
+
+The walk bound \eqref{eq:truncated} decays in $r$ in the same way, at the
+smaller rates $e^{-2.34r}$, $e^{-1.67r}$, $e^{-1.05r}$, $e^{-0.57r}$; it is below the trivial
+bound $2\norm a$ from $r=2$ on at $t=0.25$ and from $r=5$ on at $t=0.5$, and trivial for every
+$r\le10$ at $t=1$ and $t=2$, where its velocity has outrun the chain. It exceeds the error by
+factors from $12$ to above $10^{10}$. The bounded-geometry bound with $v=16$ is trivial
+throughout. Corollary~\ref{cor:automaton} and the paragraph after it predict the exponential
+decay in the radius and a front moving linearly in $t$; the velocity they give exceeds the
+observed one.}
+\end{example}
+
+\begin{figure}[htb]
+\centering
+\input{figures/longchain}
+\caption{\vetnew{The truncation error $\delta_r(t)=\norm{A(t)-P_{X_r}A(t)}$ on a chain of
+twelve qubits, $H=\sum_u(\sigma^z_u\sigma^z_{u+1}+\tfrac12\sigma^x_u\sigma^x_{u+1})$,
+$a=\sigma^x_0$, $X_r=\{0,\dots,r\}$, against $r$ on a logarithmic scale, one curve per time
+$t$. Dashed: the walk bound \eqref{eq:truncated} where it is below the trivial bound $2\norm a$
+(at $t=1$ and $2$ it is trivial for every $r$ shown). Beyond a front that moves with $t$ the
+error decays exponentially in $r$; the bound shares the decay, with a smaller rate and a far
+larger prefactor.}}
+\label{fig:longchain}
+\end{figure}
+
+\subsection{Open systems}
+
+\vet{A quantum system in contact with an environment evolves, after the environment has been
+traced out and under the Markov approximation, by a semigroup $e^{tL}$ of unital completely
+positive maps, whose generator has the Lindblad form. In the Heisenberg picture, for a
+Hamiltonian $H$ and \vetnew{finitely many} \emph{jump operators} \vetnew{$\Gamma_j$},
+\begin{equation}\label{eq:lindblad}
+  La=\ii\comm Ha+\vetnew{\sum_j}\Bigl(\Gamma_j^*a\Gamma_j-\tfrac12\bigl(\Gamma_j^*\Gamma_ja
+  +a\Gamma_j^*\Gamma_j\bigr)\Bigr).
+\end{equation}
+The jump terms describe the environment's action: a measurement-like kick $a\mapsto\Gamma^*a\Gamma$
+balanced by the anticommutator that keeps $L1=0$. On a lattice the Hamiltonian and the jumps
+are local, and the generator is a sum of local terms.}
+
+\needspace{8\baselineskip}
+\begin{definition}[Lindblad terms and families]\label{def:lindbladterm}
+\vet{A \emph{Lindblad term} on a finite region $S$ is a self-adjoint $H\in\cA(S)$ with \vetnew{finitely many jump
+operators $\Gamma_j\in\cA(S)$}; its generator $L_S$ is \eqref{eq:lindblad}, and
+the \emph{dissipator} of one jump is
+$\Delta_\Gamma a:=\Gamma^*a\Gamma-\tfrac12(\Gamma^*\Gamma a+a\Gamma^*\Gamma)$, so that
+$L_S=\ad_H+\sum_j\Delta_{\Gamma_j}$ \vetnew{(with no jumps the term is a Hamiltonian one)}. A
+\emph{Lindblad family} is a finite family $(S_i,L_i)_{i\in I}$ of Lindblad terms, with
+Hamiltonian parts $H_i$ and \vetnew{jumps $\Gamma_{ij}$, finitely many $j$ for each $i$}, together with the hypothesis
+that every sub-family is \emph{contractive}: $\norm{e^{tL_J}}\le1$ for all $J\subseteq I$ and
+$t\ge0$.}
+\end{definition}
+
+\vet{The contraction hypothesis is physics: $e^{tL_J}$ is unital and completely positive, and
+a unital positive map between C*-algebras has norm one. Neither that norm theorem nor the
+product formula that passes from the terms to their sum is reproved here; the hypothesis is
+carried explicitly, and one case, a single dephasing jump, is proved below
+(Proposition~\ref{prop:dephasing}).}
+
+\needspace{10\baselineskip}
+\begin{proposition}[Lindblad terms]\label{prop:lindbladterm}
+\vet{For a Lindblad term on $S$ and a causal net:
+\begin{enumerate}[label=(\alph*),nosep]
+\item $L_S$ is bounded, $\norm{L_S}\le2\norm H+2\sum_j\norm{\Gamma_j}^2$;
+\item $L_Sc=0$ for $c\in\cA(S^c)$;
+\item $L_Sc\in\cA(Z\cup S)$ for $c\in\cA(Z)$ (support closure, G2);
+\item $(L_Sa)^*=L_S(a^*)$.
+\end{enumerate}}
+\end{proposition}
+
+\begin{proof}
+\vet{\begin{enumerate}[label=(\alph*),nosep]
+\item $\norm{\ad_Ha}\le2\norm H\norm a$ by \eqref{eq:ad}; the three maps
+  $a\mapsto\Gamma^*a\Gamma$, $\tfrac12\Gamma^*\Gamma a$, $\tfrac12a\Gamma^*\Gamma$ have norms at most
+  $\norm\Gamma^2$, $\tfrac12\norm\Gamma^2$, $\tfrac12\norm\Gamma^2$.
+\item $c$ commutes with $H$, $\Gamma_j$ and $\Gamma_j^*$ by causality ($\cA(S)$ is closed under
+  adjoints), so $\comm Hc=0$ and
+  $\Gamma_j^*c\Gamma_j=\Gamma_j^*\Gamma_jc=\tfrac12(\Gamma_j^*\Gamma_jc+c\Gamma_j^*\Gamma_j)$.
+\item Every factor lies in $\cA(Z\cup S)$ by isotony, which is closed under products and sums.
+\item $(\ii\comm Ha)^*=\ii\comm H{a^*}$ for self-adjoint $H$, $(\Gamma^*a\Gamma)^*=\Gamma^*a^*\Gamma$,
+  and the two halves of the anticommutator exchange.\qedhere
+\end{enumerate}}
+\end{proof}
+
+\begin{theorem}[locality in the argument for Lindblad terms]\label{thm:lindbladG1}
+\vet{For a Lindblad term on $S$ and every $c$:
+\begin{enumerate}[label=(\alph*),nosep]
+\item on any net, $\norm{\Delta_\Gamma c}\le\norm\Gamma^2N_S(c)$ for $\Gamma\in\cA(S)$, hence
+  \begin{equation}\label{eq:lindbladG1direct}
+    \norm{L_Sc}\le\bigl(\norm H+\textstyle\sum_j\norm{\Gamma_j}^2\bigr)N_S(c);
+  \end{equation}
+\item on a causal net with local approximation, $L_Sc=L_S(c-P_{S^c}c)$ and
+  \begin{equation}\label{eq:lindbladG1}
+    \norm{L_Sc}\le\norm{L_S}\,N_S(c)\le\bigl(2\norm H+2\textstyle\sum_j\norm{\Gamma_j}^2\bigr)N_S(c).
+  \end{equation}
+\end{enumerate}}
+\end{theorem}
+
+\begin{proof}
+\vet{\begin{enumerate}[label=(\alph*),nosep]
+\item The dissipator is a sum of two commutators,
+  $\Delta_\Gamma c=\tfrac12\Gamma^*\comm c\Gamma+\tfrac12\comm{\Gamma^*}c\,\Gamma$ (expand both
+  sides), and $\norm{\comm cx}\le\norm x\,N_S(c)$ for $x\in\cA(S)$
+  (Proposition~\ref{prop:derivation}), applied to $x=\Gamma$ and $x=\Gamma^*$; the Hamiltonian
+  part is Proposition~\ref{prop:derivation} again.
+\item $P_{S^c}c\in\cA(S^c)$, so $L_S(P_{S^c}c)=0$ by Proposition~\ref{prop:lindbladterm}(b) and
+  $L_Sc=L_S(c-P_{S^c}c)$ by linearity. Then
+  $\norm{L_Sc}\le\norm{L_S}\norm{c-P_{S^c}c}\le\norm{L_S}N_S(c)$ by \eqref{eq:localapprox} for
+  the region $S^c$, whose complement is $S$.\qedhere
+\end{enumerate}}
+\end{proof}
+
+\vet{Route (a) is the sharper one: it needs neither causality nor the conditional expectation,
+and with no jumps it returns the Hamiltonian strength $\norm H$ of Chapter~\ref{sec:qudit}.
+Route (b) is the mechanism in one line: a term acts only on what an observable does inside its
+support, the conditional expectation isolates that part, and the strength is the norm of the
+term, the form in which the literature states the open-system bound.}
+
+\needspace{14\baselineskip}
+\begin{theorem}[open systems as local generators]\label{thm:opensystems}
+\vet{On a causal net, a Lindblad family $(S_i,L_i)_{i\in I}$ is a family of local generators
+with the strengths $\kappa_i=\norm{H_i}+\sum_j\norm{\Gamma_{ij}}^2$; with local approximation
+also with $\kappa_i=\norm{L_i}$, and with $\kappa_i=2\norm{H_i}+2\sum_j\norm{\Gamma_{ij}}^2$.
+Consequently the path-sum bound and its closed forms for $t\ge0$
+(Chapters~\ref{sec:master}--\ref{sec:closed}\vetnew{)} hold for $A(t)=e^{tL}a$: for $a\in\cA(X)$, $b\in\cA(Y)$,
+\[
+  \norm{\comm{A(t)}b}\le2\norm a\norm b\Bigl(\ind{X\cap Y\ne\emptyset}+\sum_{k\ge0}\omega_k(t)\Bigr),
+\]
+\vetnew{where the walk terms $\omega_k(t)$ of \eqref{eq:walkterms} carry the strengths used: the
+direct strengths $\norm{H_i}+\sum_j\norm{\Gamma_{ij}}^2$, or, under local approximation,
+$\norm{L_i}$ or its bound $2\norm{H_i}+2\sum_j\norm{\Gamma_{ij}}^2$;} the light cone under
+bounded geometry, and the truncated dynamics of
+Theorem~\ref{thm:truncated}.}
+\end{theorem}
+
+\begin{proof}
+\vet{G1 is Theorem~\ref{thm:lindbladG1}, (a) or (b), G2 is Proposition~\ref{prop:lindbladterm}(c),
+G3 is the contraction hypothesis; the largest strengths dominate $\norm{L_i}$, and G1 is
+monotone in $\kappa$.}
+\end{proof}
+
+\vetnew{The bounds are for $t\ge0$. In general a Lindblad family has no contractive negation, and
+the time-reversed forms of Theorem~\ref{thm:reverse} are not available: for the dephasing term of
+Proposition~\ref{prop:dephasing} below and an $a$ with $\Gamma a\Gamma=-a$ (such as $\sigma^x$ for
+$\Gamma=\sigma^z$), \eqref{eq:dephasing} at the time $-t<0$ gives $e^{-t\Delta_\Gamma}a=e^{2t}a$,
+of norm larger than $\norm a$. A family without jumps is a Hamiltonian family, whose negation is
+contractive (Theorem~\ref{thm:hamgenerators}).}
+
+\needspace{10\baselineskip}
+\begin{proposition}[a dephasing term is contractive]\label{prop:dephasing}
+\vet{For a self-adjoint jump $\Gamma$ with $\Gamma^2=1$ and no Hamiltonian part,
+$\Delta_\Gamma a=\Gamma a\Gamma-a$, $\Delta_\Gamma^2=-2\Delta_\Gamma$, and for every real $t$
+\begin{equation}\label{eq:dephasing}
+  e^{t\Delta_\Gamma}a=\tfrac{1+e^{-2t}}2\,a+\tfrac{1-e^{-2t}}2\,\Gamma a\Gamma ;
+\end{equation}
+for $t\ge0$ this is a convex combination of $a$ and a unitary conjugate, so
+$\norm{e^{t\Delta_\Gamma}}\le1$.}
+\end{proposition}
+
+\begin{proof}
+\vet{Such a $\Gamma$ is a two-valued observable, and the term is pure dephasing in its eigenbasis.
+With $\Gamma^*\Gamma=1$ the dissipator is $\Theta-\mathrm{id}$ for $\Theta:a\mapsto\Gamma a\Gamma$,
+and $\Theta^2=\mathrm{id}$, so $\Delta_\Gamma^{n+1}=(-2)^n\Delta_\Gamma$. Summing the exponential
+series, $e^{t\Delta_\Gamma}=\mathrm{id}+\sum_{n\ge0}\frac{t^{n+1}(-2)^n}{(n+1)!}\Delta_\Gamma
+=\mathrm{id}+\frac{1-e^{-2t}}2\Delta_\Gamma$, which is \eqref{eq:dephasing}. Both $\mathrm{id}$
+and $\Theta$ have norm at most one ($\Gamma$ is unitary), and the coefficients are nonnegative
+for $t\ge0$.}
+\end{proof}
+
+\begin{example}[two qubits with dephasing]\label{ex:dephasing}
+\vet{Two qubits, $H=\sigma^x_0\sigma^x_1$, one jump $\Gamma=\sigma^z_0$, and the observables
+$a=\sigma^z_0$, $b=\sigma^z_1$ of Example~\ref{ex:twoqubit}. The dissipator vanishes on $a$,
+since $a$ commutes with $\Gamma$, so $La=\ii\comm Ha$ and the derivative of $\comm{A(t)}b$ at
+$t=0$ is the nonzero double commutator of Chapter~\ref{sec:qudit}; hence $\comm{A(t)}b\ne0$ for
+some $t>0$ (the contraction of this term, whose Hamiltonian part does not commute with the jump,
+is the carried hypothesis, not Proposition~\ref{prop:dephasing}).}
+\end{example}
+
+\vetnew{For a three-qubit family with
+random Hamiltonian and jump terms on $\{0,1\}$ and $\{1,2\}$ and $a=\sigma^x_0$,
+$\norm{\comm{A(t)}{\sigma^x_2}}$ is $0$ at $t=0$ and $0.11$ at $t=0.5$; for the same $a$ and
+$b=\sigma^z_2$ at $t=0.3$ the commutator norm is $0.026$ against the walk bound $4.5$ with the
+strengths $\norm{L_i}$ and $272$ with the strengths $2\norm{H_i}+2\sum_j\norm{\Gamma_{ij}}^2$.
+Both bounds exceed the trivial bound $2$; the first overshoots by a factor of $170$, more than
+the Hamiltonian bounds above, and the larger strengths cost a further factor of $60$ (the
+direct strengths of Theorem~\ref{thm:lindbladG1}(a) are half of them, and the series they enter
+is correspondingly smaller).}
+
+\subsection*{Notes and references}
+\vetnew{\emph{Local approximation.} The review \cite{chen-lucas-yin}, its Proposition~4.1, states
+for the expectation $\mathbb E_S$ onto a region $S$, the Haar average over the unitaries of the
+complement of $S$,
+\[
+  \norm{\mathbb E_SA-A}\le\sup_B\norm{\comm AB}\le2\norm{\mathbb E_SA-A},
+\]
+the supremum over the unit operators $B$ on the complement. Theorem~\ref{thm:localapprox} is
+this statement with $S=X$, $A=M$ and $\mathbb E_S=P_X$: the Haar average and the finite twirl
+over the Weyl unitaries are both the normalized partial trace over the complement, re-embedded
+(Theorem~\ref{thm:twirl}), and the supremum is $N_{X^c}(M)$.
+
+\emph{Truncated dynamics.} The review's Proposition~4.3
+bounds the distance from $\tau_t(A)$ to the evolution under the Hamiltonian restricted to a
+larger region; Theorem~\ref{thm:truncated} matches it in shape, an observable of the larger
+region within the tail of the walk series, with the conditional expectation $P_{X'}A(t)$ as the
+local approximant and the constants of these notes.
+
+\emph{Open systems.} The review's Theorem~3.14 is its Lieb-Robinson bound for a local Lindblad
+generator, for $t\ge0$, with the norms of the Lindblad terms as strengths. On the qudit net with
+cyclic alphabets, which has local approximation (Theorem~\ref{thm:localapprox}),
+Theorem~\ref{thm:opensystems} with $\kappa_i=\norm{L_i}$ and Proposition~\ref{prop:finite} give
+it in the notation of the review's (3.36) recalled at the end of Chapter~\ref{sec:qudit}:
+\[
+  \mathcal C_{AB}(t)\le\sum_{u\in A,\,v\in B}\bigl(e^{2th}\bigr)_{uv}\quad(t\ge0),\qquad
+  h_{uv}=\sum_{i:\,u,v\in S_i}\norm{L_i},
+\]
+by the argument given there. The review obtains the contraction of the sub-families from
+complete positivity; here it is the hypothesis carried in Definition~\ref{def:lindbladterm}.}
+
+\paragraph{Checks.} {\small The twirl against the partial trace (exactly for qubits, numerically
+for qutrits), the properties of the conditional expectation, the estimate
+\eqref{eq:localapproxqudit} with the attained factor $2$, the truncation errors on chains of
+three and five qubits \vetnew{(section~3 of the script; the chapter quotes the five-site
+numbers)}, the contractivity, the vanishing off the support, the mechanism
+$L_Sc=L_S(c-P_{S^c}c)$, the strengths and the walk bound for the random Lindblad family\vetnew{ (section~4 of the script)}, and the
+degenerate cases ($X=\Lambda$, $X=\emptyset$, no jumps, $t=0$) are computed by
+\texttt{checks/m3\_check.py}. \vetnew{The twelve-qubit errors and bounds of
+Example~\ref{ex:truncation} are computed by \texttt{checks/long\_chain.py}; the fronts, decay rates, ratios and Figure~\ref{fig:longchain} by
+\texttt{checks/long\_chain\_figure.py}.}}

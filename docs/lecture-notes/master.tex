@@ -1,0 +1,319 @@
+\section{The path-sum bound}\label{sec:master}
+
+\motiv{\vet{The commutator $\comm{A(t)}b$ of an evolved observable with a probe $b$ on a region
+$Y$ can only be nonzero through the terms of the generator that cross the boundary of $Y$ (a
+term inside $Y$ cannot act on an observable supported outside it): with the crossing terms
+switched off, the observable's support never grows into $Y$, and causality kills the commutator.
+Duhamel's identity isolates exactly the contribution of the switched-off terms, as a time
+integral; hypothesis (G1) then replaces the probe $b$ by a probe on the patch $S_i$ of a single
+term, one step closer to the observable, and hypothesis (G3) guarantees that the free evolution in
+between cannot amplify anything.
+
+Iterating, the commutator is bounded by a sum over paths of
+terms leading from $Y$ to $X$, each weighted by the product of its strengths and by the factor $t^k/k!$ that the
+nested time integrals produce. \vetnew{This chapter proves that bound,
+Theorem~\ref{thm:master}, in five steps: the two analytic lemmas (Duhamel's identity and the
+invariance of closed subspaces under the exponential), the support of the restricted dynamics
+(a term inside the probe's region annihilates the observables outside it), the one-step
+inequality, the iteration with an explicit remainder, and the limit.} Figure~\ref{fig:recursion} shows the mechanism.}}
+
+\needspace{10\baselineskip}
+\subsection{Two lemmas on the exponential}\label{subsec:exp}
+
+\begin{lemma}[Duhamel's identity]\label{lem:duhamel}
+Let $\mathbb B$ be a complete normed unital real algebra, $R,Q\in\mathbb B$ and $t\in\R$. Then
+\begin{equation}\label{eq:duhamel}
+  e^{t(R+Q)}=e^{tR}+\int_0^te^{(t-s)R}\,Q\,e^{s(R+Q)}\,ds,
+\end{equation}
+the integrand being continuous in $s$.
+\end{lemma}
+
+\begin{proof}
+Let $f(s):=e^{(t-s)R}e^{s(R+Q)}$. For every \vetnew{$G\in\mathbb B$ the map $u\mapsto e^{uG}$ is
+differentiable with derivative $Ge^{uG}=e^{uG}G$}, so by the chain rule and the product rule
+\[
+  f'(s)=-e^{(t-s)R}R\,e^{s(R+Q)}+e^{(t-s)R}(R+Q)\,e^{s(R+Q)}=e^{(t-s)R}\,Q\,e^{s(R+Q)},
+\]
+a continuous function of $s$. The fundamental theorem of calculus gives
+$f(t)-f(0)=\int_0^tf'(s)\,ds$, and $f(t)=e^{t(R+Q)}$, $f(0)=e^{tR}$.
+\end{proof}
+
+\begin{lemma}[invariance]\label{lem:invariance}
+Let $E$ be a \vetnew{complex Banach space, $M\subseteq E$ a closed complex subspace and $R$ a
+bounded complex-linear operator} with $R(M)\subseteq M$. Then $e^{tR}(M)\subseteq M$ for every $t\in\R$.
+\end{lemma}
+
+\begin{proof}
+For $m\in M$ the partial sums $\sum_{n\le N}t^nR^nm/n!$ lie in $M$, since $R^nm\in M$ by
+induction, and they converge in norm to $e^{tR}m$. $M$ is closed.
+\end{proof}
+
+\subsection{The restricted dynamics and the first term}\label{subsec:restricted}
+
+\vet{Fix a causal net and a family of local generators. For a region $Y$, write
+$L^{\partial Y}:=L_{I^{\partial Y}}$ for the terms crossing $Y$ and
+$L':=L_{I\setminus I^{\partial Y}}$ for the rest, the terms disjoint from $Y$ or inside $Y$, so
+that $L=L^{\partial Y}+L'$ (Proposition~\ref{prop:subfamilies}).}
+
+\motiv{\vet{\vetnew{The terms inside $Y$ belong with the free part}: an
+observable supported outside $Y$ commutes with everything on a
+patch inside $Y$, so its commutator seminorm on that patch vanishes, and (G1) then says the term
+does nothing to it. Such a term cannot carry a signal out of $Y$. Only the terms that straddle
+the boundary of $Y$ can, and they are the perturbation.}}
+
+\begin{proposition}[a term inside the probe's region annihilates the complement]\label{prop:annihilate}
+Let the net be causal, $S_i\subseteq Y$ and $c\in\cA(Y^c)$. Then $L_ic=0$.
+\end{proposition}
+
+\begin{proof}
+Every $b\in\cA(S_i)\subseteq\cA(Y)$ commutes with $c$, since $Y^c$ and $Y$ are disjoint, so
+$N_{S_i}(c)=0$ by Proposition~\ref{prop:commnorm}(b), and (G1) gives $\norm{L_ic}\le\kappa_i\cdot0$.
+\end{proof}
+
+\begin{proposition}[support of the restricted dynamics]\label{prop:support}
+\begin{enumerate}[label=(\alph*),nosep]
+\item Let $J\subseteq I$ and let $W$ be a region with $S_i\subseteq W$ for every $i\in J$. Then
+  $L_J\,\cA(W)\subseteq\cA(W)$ and $e^{tL_J}\,\cA(W)\subseteq\cA(W)$ for every $t\in\R$.
+\item Let the net be causal. Then $L'\,\cA(Y^c)\subseteq\cA(Y^c)$ and
+  $e^{tL'}\,\cA(Y^c)\subseteq\cA(Y^c)$ for every $t\in\R$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*),nosep]
+\item For $c\in\cA(W)$ and $i\in J$, (G2) gives $L_ic\in\cA(W\cup S_i)=\cA(W)$, and a finite sum of
+elements of $\cA(W)$ lies in it. Lemma~\ref{lem:invariance} applies to the closed subspace
+$\cA(W)$.
+\item A term $i\notin I^{\partial Y}$ either misses $Y$, so that $S_i\subseteq Y^c$ and
+(G2) keeps $\cA(Y^c)$ as in (a), or lies inside $Y$, and then $L_ic=0$ for $c\in\cA(Y^c)$ by
+Proposition~\ref{prop:annihilate}. Summing, $L'$ maps $\cA(Y^c)$ into itself, and
+Lemma~\ref{lem:invariance} applies.\qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{proposition}[the first term vanishes]\label{prop:first}
+Let the net be causal. If $X\cap Y=\emptyset$, $a\in\cA(X)$ and $b\in\cA(Y)$, then
+$\comm{e^{tL'}a}{b}=0$ for every $t\in\R$.
+\end{proposition}
+
+\begin{proof}
+$X\subseteq Y^c$, so $a\in\cA(Y^c)$ and $e^{tL'}a\in\cA(Y^c)$ by
+Proposition~\ref{prop:support}(b); $Y^c$ and $Y$ are disjoint, so causality gives the claim.
+\end{proof}
+
+\subsection{The one-step inequality}\label{subsec:onestep}
+
+\needspace{10\baselineskip}
+\begin{proposition}[the reset step]\label{prop:reset}
+For $s\le t$, $c\in\cA$ and $b\in\cA$ with $\norm b\le1$,
+\[
+  \bigl\lVert\comm{e^{(t-s)L'}\,L^{\partial Y}c}{b}\bigr\rVert\le2\sum_{i\in I^{\partial Y}}\kappa_i\,N_{S_i}(c).
+\]
+\end{proposition}
+
+\begin{proof}
+$\norm{\comm{c'}b}\le2\norm{c'}$ for every $c'\in\cA$ and $\norm b\le1$; $\norm{e^{(t-s)L'}}\le1$
+by (G3) for the sub-family $I\setminus I^{\partial Y}$ and $t-s\ge0$; and
+$\norm{L^{\partial Y}c}\le\sum_{i\in I^{\partial Y}}\kappa_iN_{S_i}(c)$ by
+Proposition~\ref{prop:subfamilies}(c).
+\end{proof}
+
+\begin{figure}[t]
+\centering
+\input{figures/recursion}
+\caption{\vet{The probe-reset recursion. The commutator of the evolved observable $A(t)$ on $X$
+with a probe on $Y$ is bounded, after one Duhamel step, by the terms $S_i$ crossing $Y$, each
+contributing $2\kappa_i$ times a time integral of the same commutator with a probe on $S_i$. The
+recursion stops at the first term meeting $X$, where the trivial bound $2$ is used; the chain of
+patches visited is a path of Definition~\ref{def:path}.}}
+\label{fig:recursion}
+\end{figure}
+
+\vet{The reset step is where the probe moves: on the right-hand side the commutator with the
+original probe $b$ has become the seminorm $N_{S_i}(c)$, a supremum of commutators with probes
+on the single patch $S_i$. The next statement packages one application of Duhamel's identity
+with this step. It takes an arbitrary continuous majorant of the reset seminorms, because that
+is how the induction will consume it. The theorem needs the regions disjoint, so a probe on a
+patch that meets $X$ cannot be reset again; there the trivial bound $2$ of
+Proposition~\ref{prop:commnorm}(a) is used instead. This is why paths end at first contact.}
+
+\begin{theorem}[one Duhamel step]\label{thm:onestep}
+Let the net be causal, $X\cap Y=\emptyset$, $a\in\cA(X)$, $b\in\cA(Y)$ with $\norm b\le1$,
+$t\ge0$, and let $\beta_i:\R\to\R$ ($i\in I^{\partial Y}$) be continuous functions with
+$N_{S_i}(A(s))\le\beta_i(s)$ for all $s\in[0,t]$. Then
+\begin{equation}\label{eq:onestep}
+  \norm{\comm{A(t)}b}\le2\sum_{i\in I^{\partial Y}}\kappa_i\int_0^t\beta_i(s)\,ds .
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Lemma~\ref{lem:duhamel} with $R=L'$ and $Q=L^{\partial Y}$, applied to $a$, gives
+$A(t)=e^{tL'}a+\int_0^te^{(t-s)L'}L^{\partial Y}A(s)\,ds$. Evaluation at $a$ and the commutator
+with $b$ are bounded linear maps and pass through the integral:
+\[
+  \comm{A(t)}b=\comm{e^{tL'}a}{b}+\int_0^t\comm{e^{(t-s)L'}L^{\partial Y}A(s)}{b}\,ds .
+\]
+
+The first term is $0$ by Proposition~\ref{prop:first}. The norm of the integral is at most the
+integral of the norm, which Proposition~\ref{prop:reset} with $c=A(s)$ bounds pointwise by
+$2\sum_{i\in I^{\partial Y}}\kappa_iN_{S_i}(A(s))\le2\sum_{i\in I^{\partial Y}}\kappa_i\beta_i(s)$,
+a continuous function.
+\end{proof}
+
+\subsection{The iteration and the series}\label{subsec:iteration}
+
+\vet{For $k\ge0$ and $t\in\R$ put $\gamma_k(t):=(2t)^{k+1}/(k+1)!$, and for regions $X,Y$,
+$n\ge0$ and $t\in\R$ (a polynomial in $t$, used for $t\ge0$),
+\begin{equation}\label{eq:truncbound}
+  B_n(Y,X,t):=2\Bigl(\sum_{k<n}\gamma_k(t)\,P_{k+1}(Y,X)+\gamma_n(t)\,K^{n+1}\Bigr),
+\end{equation}
+the truncated series with its remainder. The identity $\int_0^t\gamma_k(s)\,ds=\gamma_{k+1}(t)/2$
+is what makes the time-ordered integrals produce the factorials.}
+
+\begin{theorem}[iteration]\label{thm:iteration}
+Let the net be causal, $X\cap Y=\emptyset$, $a\in\cA(X)$, $b\in\cA(Y)$ with
+$\norm a,\norm b\le1$, and $t\ge0$.
+Then $\norm{\comm{A(t)}b}\le B_n(Y,X,t)$ for every $n\ge0$.
+\end{theorem}
+
+\begin{proof}
+Induction on $n$, for all disjoint pairs $X,Y$, all $t\ge0$ and all $a,b$ of norm at most $1$
+at once.
+
+\emph{Base.} Theorem~\ref{thm:onestep} with the constant majorants $\beta_i=2$, legitimate since
+$N_{S_i}(A(s))\le2\norm{A(s)}\le2$ by Propositions~\ref{prop:commnorm}(a)
+and~\ref{prop:subfamilies}(b), gives $\norm{\comm{A(t)}b}\le4t\sum_{i\in I^{\partial Y}}\kappa_i\le4tK
+=B_0(Y,X,t)$.
+
+\emph{Step.} Assume the bound for $n$. Apply Theorem~\ref{thm:onestep} with the majorant
+$\beta_i(s)=2$ when $S_i$ meets $X$, and $\beta_i(s)=B_n(S_i,X,s)$ when $S_i$ misses $X$; the
+latter is
+a majorant because, for every unit $b'\in\cA(S_i)$, the induction hypothesis for the disjoint
+pair $(X,S_i)$ gives $\norm{\comm{A(s)}{b'}}\le B_n(S_i,X,s)$, and $N_{S_i}(A(s))$ is the
+supremum of these. Integrating \eqref{eq:truncbound} with the identity for $\int\gamma_k$,
+\[
+  \int_0^tB_n(S_i,X,s)\,ds=\sum_{k<n}\gamma_{k+1}(t)\,P_{k+1}(S_i,X)+\gamma_{n+1}(t)\,K^{n+1}.
+\]
+
+Summing over $i\in I^{\partial Y}$ with the weights $2\kappa_i$: the terms meeting $X$ contribute
+$2\gamma_0(t)\sum\kappa_i=2\gamma_0(t)P_1(Y,X)$; the terms missing $X$ contribute
+$2\sum_{k<n}\gamma_{k+1}(t)\sum_i\kappa_iP_{k+1}(S_i,X)=2\sum_{k<n}\gamma_{k+1}(t)P_{k+2}(Y,X)$ by
+the recursion of Proposition~\ref{prop:pathcount}(a), and a remainder
+$2\gamma_{n+1}(t)K^{n+1}\sum_i\kappa_i\le2\gamma_{n+1}(t)K^{n+2}$, where the sum over the terms
+missing $X$ is at most $K$. Together this is $B_{n+1}(Y,X,t)$: the first group is the $k=0$
+term of the sum in \eqref{eq:truncbound} for $n+1$, the second group its terms $k=1,\dots,n$,
+and the remainder its last term.
+\end{proof}
+
+\begin{theorem}[the path-sum bound]\label{thm:master}
+Let the net be causal and $t\ge0$. For regions $X,Y$, $a\in\cA(X)$ and $b\in\cA(Y)$,
+\begin{equation}\label{eq:master}
+  \norm{\comm{A(t)}b}\le2\norm a\norm b\Bigl(\ind{X\cap Y\ne\emptyset}
+  +\sum_{k\ge1}\frac{(2t)^k}{k!}\,P_k(Y,X)\Bigr),
+\end{equation}
+where $\ind{P}$ is the indicator of a condition $P$, $1$ if it holds and $0$ otherwise; the series converges, with
+sum at most $e^{2tK}-1$. Equivalently, for
+$C_{X,Y}(t):=\sup\{\norm{\comm{e^{tL}a}b}:a\in\cA(X),b\in\cA(Y),\norm a,\norm b\le1\}$,
+\[
+  C_{X,Y}(t)\le2\,\ind{X\cap Y\ne\emptyset}+2\sum_{k\ge1}\frac{(2t)^k}{k!}\,P_k(Y,X).
+\]
+\end{theorem}
+
+\begin{proof}
+The $k$-th term is at most $(2tK)^k/k!$ by Proposition~\ref{prop:pathcount}(b), so the series
+converges. If $X$ meets $Y$ the bound $2\norm a\norm b$ holds since $\norm{A(t)}\le\norm a$. If
+$X\cap Y=\emptyset$ and $a,b$ are unit, Theorem~\ref{thm:iteration} gives, for every $n$, the
+truncated series plus $2(2tK)^{n+1}/(n+1)!$, which tends to $0$; the truncated series is at most
+the full one. General $a,b$ follow by scaling, and the supremum form by taking the supremum.
+\end{proof}
+
+\begin{example}[two qubits, continued]\label{ex:twosites-bound}
+\vet{For $H=\sigma^z_0\sigma^z_1$, $a=\sigma^x_0$ and $b=\sigma^x_1$ (Example~\ref{ex:twosites}),
+$P_1=1$ and $P_k=0$ for $k\ge2$, so Theorem~\ref{thm:master} gives
+$\norm{\comm{A(t)}b}\le2\cdot2t=4t$. The exact value $2|\sin2t|$ lies below $4t$ and matches
+it to first order: the constant $2\kappa$ per step is not loose at short times.}
+\end{example}
+
+\begin{example}[a three-qubit chain]\label{ex:chain}
+\vet{Three qubits on $\Lambda=\{0,1,2\}$ with the Hamiltonian
+\[
+  H=\sigma^z_0\sigma^z_1+\tfrac12\,\sigma^x_1\sigma^x_2 ,
+\]
+that is, two terms: $\Phi_1=\sigma^z_0\sigma^z_1$ on $S_1=\{0,1\}$ with $\kappa_1=1$, and
+$\Phi_2=\tfrac12\sigma^x_1\sigma^x_2$ on $S_2=\{1,2\}$ with $\kappa_2=\tfrac12$. The observable
+is $a=\sigma^x_0$ on $X=\{0\}$, the probe $b=\sigma^z_2$ on $Y=\{2\}$.
+
+\emph{The paths.} Only $S_2$ crosses $Y$, and it misses $X$; after it only $S_1$ can follow,
+since $S_1$ crosses $S_2$ while $S_2$ does not cross itself, and $S_1$ meets $X$. So the only
+path is $(S_2,S_1)$: $P_2=\kappa_1\kappa_2=\tfrac12$, every other $P_k$ is $0$, and
+Theorem~\ref{thm:master} gives
+\[
+  \norm{\comm{A(t)}{\sigma^z_2}}\le2\cdot\frac{(2t)^2}{2!}\cdot\frac12=2t^2\qquad\vetnew{\text{for every }t\ge0}.
+\]
+
+\vetnew{\emph{The exact value.} The three Pauli strings $\mathbf e_0=\sigma^x_0$,
+$\mathbf e_1=\sigma^y_0\sigma^z_1$, $\mathbf e_2=\sigma^y_0\sigma^y_1\sigma^x_2$ satisfy
+$\comm H{\mathbf e_0}=2\ii\mathbf e_1$, $\comm H{\mathbf e_1}=-2\ii\mathbf e_0-\ii\mathbf e_2$,
+$\comm H{\mathbf e_2}=\ii\mathbf e_1$, so
+$A(t)=f_0(t)\mathbf e_0+f_1(t)\mathbf e_1+f_2(t)\mathbf e_2$ with $f_0'=2f_1$,
+$f_1'=-2f_0-f_2$, $f_2'=f_1$ and $(f_0,f_1,f_2)(0)=(1,0,0)$; hence
+$f_2(t)=\tfrac25(\cos\sqrt5\,t-1)$. Only $\mathbf e_2$ fails to commute with the probe,
+$\comm{\mathbf e_2}{\sigma^z_2}=-2\ii\,\sigma^y_0\sigma^y_1\sigma^y_2$, so}
+\[
+  \norm{\comm{A(t)}{\sigma^z_2}}=\vetnew{2|f_2(t)|}=\tfrac45\bigl(1-\cos\sqrt5\,t\bigr)
+  =2t^2-\tfrac56t^4+O(t^6).
+\]
+The ratio to the bound is $1-\tfrac5{12}t^2+\dots$, equal to $0.99996$ at $t=0.01$ and
+decreasing; the bound is never exceeded. On this chain the path-sum bound is sharp to leading
+order at short times, while at long times every commutator is at most $2$ and the bound grows.}
+\end{example}
+
+\subsection*{Route against the source}
+\vet{The sources differentiate the commutator in time and move the derivative onto the probe
+with the Jacobi identity. Writing $f(t)=\comm{\tau_t(A)}B$ and
+$\frac{d}{dt}\tau_t(A)=\ii\comm{\tau_t(H_X)}{\tau_t(A)}$ with $H_X$ the terms meeting the
+observable's region, \cite{nsy2019} (eqs.~(3.40)--(3.48)) and \cite{nachtergaele-sims} obtain
+$f'=\ii\comm{\tau_t(H_X)}{f}-\ii\comm{\tau_t(A)}{\comm{\tau_t(H_X)}B}$; the first term generates a
+norm-preserving flow and drops out of the norm estimate, the second resets the observable to a
+single term $\Phi(Z)$ with $Z\cap X\ne\emptyset$, and iterating gives a series over chains of
+overlapping supports. The review \cite{chen-lucas-yin} (eqs.~(3.26)--(3.29)) does the same in
+graph language.
+
+The route above differs in three respects. It integrates (Duhamel) instead of
+differentiating, so that no Jacobi identity and no derivation property are needed, and the
+hypotheses reduce to (G1)--(G3); the open-system bound of Chapter~\ref{sec:approx} is therefore
+the same theorem. It resets the probe rather than the observable, which is a matter of taste.
+And it stops at first contact, which the sources do not. The path class is otherwise theirs.
+
+The chains of \cite{nsy2019}, eqs.~(3.41)--(3.42), are sequences $Z_1,\dots,Z_n$ with $Z_1$
+meeting the observable's region and its complement, each $Z_{j+1}$ meeting $Z_j$ and its
+complement, and $Z_n$ meeting the probe's region; they run from the observable to the probe
+because the source resets the observable. For an automorphism group
+$\norm{\comm{\tau_t(A)}B}=\norm{\comm{A}{\tau_{-t}(B)}}$ and the source's bound depends on $|t|$,
+so its theorem applied to the pair $(B,A)$ runs the chains from $Y$: $Z_1$ crosses $Y$ and each
+$Z_{j+1}$ crosses $Z_j$, which is Definition~\ref{def:path} without first contact. With one
+term per support and $\kappa_Z=\norm{\Phi(Z)}$, the weights $2\norm{\Phi(Z_j)}$ and the
+nested integrals $t^n/n!$ are the same, so in the Hamiltonian case the series \eqref{eq:master}
+is at most the chain series of \cite{nsy2019} term by term.
+
+The reason the sources may restrict
+to crossing sets is the one of Proposition~\ref{prop:annihilate}: a term inside the current
+region cannot move an observable supported outside it. The review's recursion (3.29b) drops the
+repeated edge without giving this reason; Proposition~\ref{prop:annihilate} supplies it.
+
+The review's Theorem~3.4 sums over sequences from a set meeting $Y$ to a set meeting $X$ with
+consecutive overlap and distinct consecutive terms, a class containing ours since a set crossing
+another differs from it, so \eqref{eq:master} is at most that series as well; the review
+attributes the theorem to the work it numbers [34], and the stronger irreducible-path bound of
+\cite{chen-lucas2021}, Theorem~3, is not claimed here.}
+
+\subsection*{Notes and references}
+\vet{Theorem~\ref{thm:master} is the generator-level form of the Lieb-Robinson path series,
+Theorem~3.4 of \cite{chen-lucas-yin} and eqs.~(3.41)--(3.42) of \cite{nsy2019}, with the
+differences listed above; its constants, $2\kappa_i$ per step and $t^k/k!$, are theirs.
+Duhamel's identity and the invariance lemma are standard; both are proved here for a general
+complete normed unital real algebra and a general Banach space.}
+
+\paragraph{Checks.} {\small The numbers of Example~\ref{ex:chain} are computed by
+\texttt{checks/m1a\_crossing\_check.py} and \texttt{checks/m1a\_chain\_expansion\_check.py},
+the latter also for the closed form of the commutator norm.}

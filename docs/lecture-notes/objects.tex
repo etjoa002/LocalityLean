@@ -1,0 +1,267 @@
+\section{Nets, generators and paths}\label{sec:objects}
+
+\motiv{\vet{A Lieb-Robinson bound is a statement about three things: where observables live,
+how the dynamics is assembled from local pieces, and which chains of pieces can carry a signal
+from one region to another. This chapter fixes the three objects and nothing else. The net of
+local algebras records where observables live (Definition~\ref{def:net}); the local generator
+family records the dynamics as a finite sum of bounded maps, each tied to a patch of sites and
+each obeying three hypotheses (Definition~\ref{def:local-generators}); the paths record the
+chains (Definition~\ref{def:path}).
+
+The path-sum bound of Chapter~\ref{sec:master} is a bound on commutators by a weighted count of
+paths, and every later chapter is the same theorem with one of these objects made concrete. A reader who knows the literature's interactions
+$\Phi(Z)$ will recognise the Hamiltonian case in Example~\ref{ex:hamiltonian}; the reading guide
+gives the full dictionary.}}
+
+\subsection{The net of local algebras}\label{subsec:net}
+
+\vet{Throughout, $\Lambda$ is a set, the \emph{sites}, and $\cA$ a unital C*-algebra, the
+\emph{ambient algebra}. The regions are all subsets of $\Lambda$; no metric is assumed in this
+chapter, and no finiteness of $\Lambda$.}
+
+\begin{definition}[net of local algebras]\label{def:net}
+A \emph{net} assigns to every region $Z\subseteq\Lambda$ \vetnew{a unital C*-subalgebra
+$\cA(Z)\subseteq\cA$ (a norm-closed $*$-subalgebra containing $1$)}, the \emph{local algebra}
+of $Z$, monotonically: $\cA(Z)\subseteq\cA(Z')$
+whenever $Z\subseteq Z'$. The net is \emph{causal} if observables of disjoint regions commute:
+$ab=ba$ for $a\in\cA(Z)$, $b\in\cA(Z')$ and $Z\cap Z'=\emptyset$.
+\end{definition}
+
+\vet{The net is the one of algebraic quantum field theory, an assignment of local algebras to
+regions over an abstract causal structure that says which regions are spacelike separated and
+which depend on which. On a lattice the structure is the simplest one: two regions are spacelike
+separated exactly when they are disjoint, and a region depends on another exactly when it is
+contained in it. Causality of the net for this structure is the commutation above, and it is
+the only property of the structure used in these notes. \vetnew{The
+assignment is required on all subsets, including infinite ones, because the proof of the
+path-sum bound uses the local algebra of the complement $Y^c$ of the probe's region, which is
+infinite when $\Lambda$ is infinite and $Y$ finite.} On a finite lattice this is no restriction; on the infinite lattice of
+Chapter~\ref{sec:limit} the quasi-local algebra supplies $\cA(Z)$ for every $Z$.}
+
+\subsection{The commutator seminorm}\label{subsec:commnorm}
+
+\motiv{\vet{A bounded map of $\cA$ can only be called local if there is a way to say how much
+an observable \emph{sees} a region. The right quantity is not the norm of the observable but
+how far it is from commuting with the region's algebra; an observable supported far away sees
+nothing, however large it is. The commutator seminorm measures this, and hypothesis (G1) below
+is phrased with it.}}
+
+\begin{definition}[commutator seminorm]\label{def:commnorm}
+For a region $S$ and $c\in\cA$,
+\begin{equation}\label{eq:commnorm}
+  N_S(c):=\sup\{\norm{\comm cb}: b\in\cA(S),\ \norm b\le1\},
+\end{equation}
+where $\comm cb=cb-bc$.
+\end{definition}
+
+\begin{proposition}[properties of the seminorm]\label{prop:commnorm}
+For regions $S\subseteq S'$, $c,c'\in\cA$ and \vetnew{$z\in\C$}:
+\begin{enumerate}[label=(\alph*),nosep]
+\item $0\le N_S(c)\le2\norm c$, and $\norm{\comm cb}\le N_S(c)$ for every $b\in\cA(S)$ with
+  $\norm b\le1$;
+\item $N_S(c)=0$ when $c$ commutes with every element of $\cA(S)$;
+\item $N_S(c)\le N_{S'}(c)$;
+\item $N_S(c+c')\le N_S(c)+N_S(c')$, \vetnew{$N_S(zc)=|z|\,N_S(c)$}, and $|N_S(c)-N_S(c')|\le2\norm{c-c'}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The set in \eqref{eq:commnorm} contains $0$ (take $b=0$) and is bounded by $2\norm c$, since
+$\norm{\comm cb}\le2\norm c\norm b$; this gives (a). In (b) every element of the set is $0$.
+In (c) the set for $S$ is contained in the set for $S'$ because $\cA(S)\subseteq\cA(S')$. The
+first two parts of (d) follow from $\comm{c+c'}b=\comm cb+\comm{c'}b$ and
+\vetnew{$\comm{zc}b=z\comm cb$} by taking suprema; the last part from the first two applied to
+$c=(c-c')+c'$ and $c'=(c'-c)+c$ together with (a).
+\end{proof}
+
+\subsection{Local generators}\label{subsec:generators}
+
+\motiv{\vet{The dynamics of a lattice system is a one-parameter group or semigroup $A\mapsto
+e^{tL}A$ on the observables, and $L$ is a sum of pieces, one per interaction term. For a
+Hamiltonian $H=\sum_i\Phi_i$ the pieces are the derivations $\ii\comm{\Phi_i}{\cdot}$; for an
+open system they are local Lindblad generators. What the bound needs from a piece is not that it
+is a derivation but three properties: it acts on an observable only through the observable's
+failure to commute with its own patch; it spreads supports by at most its patch; and no
+sub-collection of pieces can amplify norms. Stating the hypotheses at this level is what makes
+Hamiltonian and open dynamics instances of one theorem.}}
+
+\begin{definition}[family of local generators]\label{def:local-generators}
+A \emph{family of local generators} on a net is a finite index set $I$ and, for each $i\in I$,
+a finite region $S_i\subseteq\Lambda$ (the \emph{support}), a bounded linear map
+$L_i:\cA\to\cA$ (the \emph{generator}) and a number $\kappa_i\ge0$ (the \emph{strength}), such
+that
+\begin{enumerate}[label=(G\arabic*),nosep]
+\item \emph{locality in the argument:} $\norm{L_ic}\le\kappa_i\,N_{S_i}(c)$ for every $c\in\cA$;
+\item \emph{support closure:} $L_i\,\cA(Z)\subseteq\cA(Z\cup S_i)$ for every region $Z$;
+\item \emph{contraction:} $\norm{e^{tL_J}}\le1$ for every $J\subseteq I$ and every $t\ge0$,
+  where $L_J:=\sum_{i\in J}L_i$.
+\end{enumerate}
+The \emph{full generator} is $L:=L_I$, the \emph{total strength} $K:=\sum_{i\in I}\kappa_i$, and
+the \emph{dynamics} is $A(t):=e^{tL}a$ for $a\in\cA$ and $t\ge0$. A set $S$ \emph{crosses} a
+region $Y$ if $S\cap Y\ne\emptyset$ and $S\not\subseteq Y$, that is, $S$ meets $Y$ and its
+complement. For a region $Y$, $I^{\partial Y}:=\{i\in I:S_i\text{ crosses }Y\}$ is the set of
+terms \emph{crossing} $Y$.
+\end{definition}
+
+\vet{\vetnew{The superscript in $I^{\partial Y}$ is for now a label for the terms crossing $Y$;
+the boundary $\bd Y$ as a set of sites is defined in Chapter~\ref{sec:closed}.} The exponential
+is that of the Banach algebra of bounded operators on $\cA$,
+$e^{tL}=\sum_{n\ge0}t^nL^n/n!$. Hypothesis (G3) is asked for every sub-family because the proof
+switches off the terms crossing the probe's region and evolves with the rest; the instances verify it
+uniformly (unitarity for a Hamiltonian family, Chapter~\ref{sec:qudit}; for a Lindblad family
+it is carried as a hypothesis, implied by complete positivity with unit preservation,
+Chapter~\ref{sec:approx}), so nothing is lost by
+asking for all $J$ at once, though only the full family
+and the complements $I\setminus I^{\partial Y'}$ of the regions $Y'$ that the recursion visits
+are used.
+
+The finiteness of each $S_i$ is not used in this chapter or the next; it enters with the site
+matrix of Chapter~\ref{sec:closed}.}
+
+\begin{proposition}[sub-families]\label{prop:subfamilies}
+For a family of local generators, all $J,J'\subseteq I$, every region $Y$ and all $a,c\in\cA$:
+\begin{enumerate}[label=(\alph*),nosep]
+\item $L_{J\cup J'}=L_J+L_{J'}$ when $J\cap J'=\emptyset$; in particular
+  $L=L_{I^{\partial Y}}+L_{I\setminus I^{\partial Y}}$;
+\item $\norm{e^{tL}a}\le\norm a$ for $t\ge0$;
+\item $\norm{L_Jc}\le\sum_{i\in J}\kappa_i\,N_{S_i}(c)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*),nosep]
+\item The splitting of a finite sum over a disjoint union.
+\item (G3) for $J=I$.
+\item The triangle inequality and (G1) term by term.\qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{example}[Hamiltonian terms]\label{ex:hamiltonian}
+\vet{\vetnew{In a nonzero ambient algebra, $\cA\ne0$ (so that a unitary has norm one), let}
+$\Phi_i\in\cA(S_i)$ be self-adjoint, $L_i:=\ii\comm{\Phi_i}{\cdot}$ and
+$\kappa_i:=\norm{\Phi_i}$. Then (G1) holds because $\norm{L_ic}=\norm{\comm{c}{\Phi_i}}
+=\norm{\Phi_i}\,\norm{\comm{c}{\Phi_i/\norm{\Phi_i}}}\le\kappa_iN_{S_i}(c)$ when
+$\Phi_i\ne0$, and trivially otherwise. (G2) holds because $\Phi_ic$ and $c\Phi_i$ lie in the
+algebra generated by $\cA(Z)$ and $\cA(S_i)$, which is contained in $\cA(Z\cup S_i)$. (G3)
+holds because $e^{tL_J}$ is conjugation by the unitary $e^{\ii tH_J}$ with
+$H_J=\sum_{i\in J}\Phi_i$, an isometry.
+
+This is the literature's setting: an interaction $\Phi$ with terms $\Phi(Z)$ on finite sets $Z$
+and the Heisenberg dynamics $\tau_t(A)=e^{\ii tH}Ae^{-\ii tH}$.}
+\end{example}
+
+\subsection{Paths}\label{subsec:paths}
+
+\motiv{\vet{A signal from the probe's region $Y$ to the observable's region $X$ must pass from
+term to term, the first crossing $Y$ and each crossing the last. The combinatorial object is the sequence of terms it
+passes through, and the bound will count such sequences, each weighted by the product of the
+strengths of its terms. Two conventions are fixed here and matter later. Each term crosses the
+patch of the previous one, meeting it and its complement: a term inside the current patch cannot
+carry the signal out of it, as Chapter~\ref{sec:master} shows, so no term follows itself and no
+term is nested in its predecessor (a term may recur later, after another one). And a path ends
+at the first term that touches $X$, because the recursion stops there.
+Figure~\ref{fig:hypergraph} shows the crossing condition; the first-contact condition is seen in
+Example~\ref{ex:twosites} and in the chain of Chapter~\ref{sec:master}.}}
+
+\begin{definition}[first-contact paths]\label{def:path}
+Let $X,Y$ be regions and $k\ge1$. A \emph{path of length $k$ from $Y$ to $X$} is a sequence
+$(i_1,\dots,i_k)\in I^k$ such that
+\[
+  S_{i_1}\text{ crosses }Y,\qquad S_{i_{j+1}}\text{ crosses }S_{i_j}\ \ (1\le j<k),\qquad
+  S_{i_j}\cap X=\emptyset\ \ (1\le j<k),\qquad S_{i_k}\cap X\ne\emptyset .
+\]
+Its \emph{weight} is $w(i_1,\dots,i_k):=\prod_{j=1}^k\kappa_{i_j}$. There is no path of length
+$0$. The \emph{path count} $P_k(Y,X)$ is the sum of the weights of the paths of length $k$ from
+$Y$ to $X$, and $P_0(Y,X):=0$.
+\end{definition}
+
+\begin{figure}[htb]
+\centering
+\input{figures/hypergraph}
+\caption{\vet{The interaction hypergraph of three terms $S_1=\{1,2\}$, $S_2=\{1,3\}$,
+$S_3=\{3,4\}$ on five sites, with $Y=\{1\}$ and $X=\{4\}$. Left: the path $(S_2,S_3)$ of length
+two. Middle: the path $(S_1,S_2,S_3)$ of length three; the sequence $(S_2,S_2,S_3)$ is not a
+path, because $S_2$ does not cross itself. Right: the sequence $(S_2,S_1,S_3)$ is not a path,
+because $S_1$ and $S_3$ do not meet, although each set meets the union of $Y$ and the earlier
+ones. Blue marks the sets of the sequence in order, red the step that fails. For unit strengths
+the counts are $P_1=0$ and $P_k=1$ for every $k\ge2$, the single path being the alternating
+sequence $(S_2,S_1,S_2,\dots,S_3)$ or $(S_1,S_2,S_1,\dots,S_3)$ ending with $S_2,S_3$. With
+consecutive overlap in place of crossing, so that a term may follow itself, the first-contact
+counts would be $0,1,2,4$; dropping first contact as well gives $0,1,3,8$.}}
+\label{fig:hypergraph}
+\end{figure}
+
+\begin{proposition}[the path count by recursion]\label{prop:pathcount}
+For all regions $X,Y$:
+\begin{enumerate}[label=(\alph*),nosep]
+\item $P_1(Y,X)=\sum_{i\in I^{\partial Y},\ S_i\cap X\ne\emptyset}\kappa_i$ and, for $k\ge1$,
+  $P_{k+1}(Y,X)=\sum_{i\in I^{\partial Y},\ S_i\cap X=\emptyset}\kappa_i\,P_k(S_i,X)$;
+\item $0\le P_k(Y,X)\le K^k$ for every $k$ (with $K^0=1$).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*),nosep]
+\item The paths of length $1$ are the single indices $i$ whose support crosses $Y$ and meets $X$,
+of weight $\kappa_i$. A sequence $(i_1,\dots,i_{k+1})$ is a path of length $k+1$ from $Y$ to $X$
+exactly when $S_{i_1}$ crosses $Y$ and misses $X$, and $(i_2,\dots,i_{k+1})$ is a path of length
+$k$ from $S_{i_1}$ to $X$: the condition ``$S_{i_2}$ crosses $S_{i_1}$'' is the first condition of
+the shorter path with $Y$ replaced by $S_{i_1}$, and the remaining conditions are unchanged.
+Splitting the sum according to $i_1$ and using $w(i_1,\dots,i_{k+1})=\kappa_{i_1}w(i_2,\dots,i_{k+1})$
+gives the recursion.
+\item By induction on $k$ using (a): $P_1\le\sum_i\kappa_i=K$ and
+$P_{k+1}(Y,X)\le\sum_i\kappa_iK^k=K^{k+1}$.\qedhere
+\end{enumerate}
+\end{proof}
+
+\vet{The recursion of (a) is the form in which the path count enters the proof of the path-sum
+bound; the explicit sum over sequences is the form in which it is read.}
+
+\begin{example}[two qubits]\label{ex:twosites}
+\vet{Two sites $\Lambda=\{0,1\}$, each carrying a qubit, so \vetnew{$\cA=\Mat_2(\C)\otimes\Mat_2(\C)$} with
+\vetnew{$\cA(\{0\})=\Mat_2(\C)\otimes1$, $\cA(\{1\})=1\otimes\Mat_2(\C)$}, and the Pauli matrices
+$\sigma^x_j,\sigma^y_j,\sigma^z_j$ acting on site $j$. The Hamiltonian is the single term
+\[
+  H=\sigma^z_0\sigma^z_1,
+\]
+so the family has one generator, $S_1=\{0,1\}$, $L_1=\ii\comm{H}{\cdot}$ and
+$\kappa_1=\norm H=1$ (Example~\ref{ex:hamiltonian}). Take the observable $a=\sigma^x_0$ on
+$X=\{0\}$ and the probe $b=\sigma^x_1$ on $Y=\{1\}$. The support $S_1$ crosses $Y$ and meets
+$X$, so the only path is $(1)$, of length one: $P_1=1$ and $P_k=0$ for $k\ge2$, since a path of
+length two or more would have to miss $X$ at its first step.
+
+The dynamics is explicit. Since $H$ anticommutes with $\sigma^x_0$,
+$e^{\ii tH}\sigma^x_0=\sigma^x_0e^{-\ii tH}$, so
+$A(t)=\sigma^x_0e^{-2\ii tH}=\sigma^x_0(\cos2t-\ii\sin2t\,\sigma^z_0\sigma^z_1)$ and
+\[
+  \comm{A(t)}{\sigma^x_1}=-\ii\sin2t\,\sigma^x_0\sigma^z_0\comm{\sigma^z_1}{\sigma^x_1}
+  =2\sin2t\,\sigma^x_0\sigma^z_0\sigma^y_1,
+\]
+of norm $2|\sin2t|$. The path-sum bound of Chapter~\ref{sec:master} will give $4t$.}
+\end{example}
+
+\subsection*{Notes and references}
+\vet{\vetnew{The net of local algebras is the one of algebraic quantum field theory, restricted to a
+lattice. The bound goes back to \cite{lieb-robinson}; its form for interactions on general
+lattices, decaying with the distance, is that of \cite{hastings-koma,nachtergaele-sims}.} The
+commutator seminorm is the quantity $\sup_{\norm B=1}\norm{\comm AB}$ that the review
+\cite{chen-lucas-yin} uses for local approximants (Proposition~4.1 there), here promoted to the
+hypothesis (G1). The literature states the dynamics through an interaction $\Phi$
+(\cite{nachtergaele-sims}, eqs.~(2.5)--(2.6); \cite{nsy2019}, \S2) or through edge Hamiltonians
+$H_e$ (\cite{chen-lucas-yin}, \S3); both are instances of Definition~\ref{def:local-generators}
+(Chapters~\ref{sec:qudit} and~\ref{sec:approx}). The crossing condition is that of the chains
+of \cite{nsy2019}, eqs.~(3.41)--(3.42), which run over sets meeting the previous set and its
+complement (their chains start at the observable's region and ours at the probe's; the
+orientation is reconciled in Chapter~\ref{sec:master}); the sequences of \cite{chen-lucas-yin},
+Theorem~3.4, eq.~(3.34), run from a set meeting $Y$ to a set meeting $X$ with consecutive overlap and distinct
+consecutive terms, a larger class; the first-contact condition is ours. Union-chains, sequences
+in which each set meets the union of $Y$ and the earlier sets, are a tempting but wrong
+bookkeeping object: the three-term example of Figure~\ref{fig:hypergraph} separates the two
+notions, and there are four-term hypergraphs on three sites for which union-chains are not
+dominated by the site-matrix bound of Chapter~\ref{sec:closed}, whereas paths always are.}
+
+\paragraph{Checks.} {\small The counts of Figure~\ref{fig:hypergraph} and of
+Example~\ref{ex:twosites} are computed by \texttt{checks/m1a\_check.py} and
+\texttt{checks/path\_check.py}; the four-term hypergraph is in the latter's section~2. \vetnew{The counts of the two examples of
+the reading guide are computed by \texttt{checks/m1a\_check.py}, \texttt{checks/path\_check.py}
+and \texttt{checks/m1a\_crossing\_check.py}.}}

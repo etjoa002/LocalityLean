@@ -1,0 +1,199 @@
+\documentclass[11pt]{article}
+% Preamble adapted from QCALean's lecture notes, themselves adapted from LinearAQFT's.
+\usepackage[a4paper,margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\numberwithin{equation}{section}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\PassOptionsToPackage{dvipsnames}{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc,decorations.pathreplacing}
+\usepackage{enumitem}
+\usepackage{booktabs,longtable,array}
+\usepackage{needspace}
+\usepackage{placeins}
+% Motivating paragraphs; set \motiv to \textcolor{Blue}{#1} to highlight them while vetting.
+\newcommand{\motiv}[1]{#1}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\theoremstyle{plain}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cL}{\mathcal L}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\DeclareMathOperator{\site}{site}
+\newcommand{\comm}[2]{[#1,#2]}
+\newcommand{\gcomm}[2]{[#1,#2]_{\pm}}
+\newcommand{\ind}[1]{\mathbf 1_{\{#1\}}}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\dist}{d}
+\newcommand{\bd}{\partial}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\Mat}{\mathrm M}
+\newcommand{\ad}{\mathrm{ad}}
+\newcommand{\clock}{\mathsf Z}
+\newcommand{\shift}{\mathsf X}
+
+% Passages for the user to vet; set to {#1} once accepted.
+\newcommand{\vet}[1]{#1}
+\newcommand{\vetnew}[1]{#1}
+\newcommand{\reve}[1]{#1}
+\newcommand{\vetsource}[1]{#1}
+\title{Lieb-Robinson bounds from one theorem}
+\author{}
+\date{}
+\input{lean-links}
+\input{checked-labels}
+\begin{document}
+\LLEnableLinks
+\sloppy
+\maketitle
+\vspace{-2em}
+\noindent\motiv{\vet{A Lieb-Robinson bound says that in a lattice of quantum systems with bounded
+local interactions, information travels no faster than a finite velocity: the commutator of a
+time-evolved observable with a distant one is exponentially small outside a light cone. These
+notes are the mathematical account of the Lean library LocalityLean. \vetnew{They prove one
+theorem, the path-sum bound: under three hypotheses on the generators of the dynamics, such
+commutators are bounded by a sum over paths of overlapping interaction terms. The published
+bounds for qudit lattices, open systems and harmonic oscillators are then read off as its
+instances; the chapters on fermions and infinite lattices are to come.}}}
+
+{\small\tableofcontents}
+\medskip
+
+\section*{About these notes}
+\addcontentsline{toc}{section}{About these notes}
+\vet{The notes follow the logical build of the theory rather than the order of the literature:
+the objects (nets of local algebras, local generators, paths), the central theorem (the path-sum
+bound), its closed forms (site matrix, decay functions, light cones), then one chapter per
+instance, each showing the same theorem specialized, and finally the thermodynamic limit.
+
+\vetnew{\textbf{Reading conventions.} The numbers in the examples are computed by scripts named in
+each chapter's end notes. The literature's terms are used wherever it has one; the terms coined
+for these notes are listed below and in the reading guide.}
+
+\vetnew{A statement marked \LLLeanTag{} has a checked proof in LocalityLean or in the libraries
+\mbox{LinearAQFT}, \mbox{LocalAlgebrasLean} and \mbox{BosonicLean} on which it builds, whose correspondence with the
+statement here has been independently reviewed; the declaration index at the end names the
+checked declarations. Every Example, and the one Proposition without a Lean proof (on the rescaling of
+units for harmonic bosons), carries exactly one status: \LLLeanTag{} as above,
+\LLScriptTag{} when a check script verifies it exhaustively, or \LLPaperTag{} when it is checked
+on paper only. Definitions, Remarks and paragraphs of motivation carry no marks.}}
+
+\medskip\noindent\vetnew{\textbf{Coined terms.}} \vet{\emph{Locality in the argument} (hypothesis G1
+of Definition~\ref{def:local-generators}); \emph{probe} (the second observable in the commutator)
+and \emph{probe reset} (the step of the recursion, Proposition~\ref{prop:reset});
+\emph{first-contact path} (Definition~\ref{def:path}); ``a set \emph{crosses} a region'' (it
+meets the region and its complement; the sources write the condition without a name);
+\emph{site matrix} (the literature's $h_{uv}$, unnamed there); \vetnew{\emph{walk weight}
+(Chapter~\ref{sec:closed}: the literature's entries of $h^k$, named for the abstract setting);
+\emph{decay function} (the literature's $F$-function, here a function of pairs of sites);
+\emph{$F$-bound} (any admissible constant $N_F$ with $h\le N_FF$; the literature's $F$-norm is
+the least such).}\par\medskip\noindent \emph{Hamiltonian
+family} (Chapter~\ref{sec:qudit}: the literature's interaction, indexed by a finite set so that
+one support may carry several terms), ``a matrix \emph{local to} a region'' (the tensor
+factor $m\otimes1$, defined by its action on configurations), ``a net with \emph{local
+approximation}'' and \emph{$\varepsilon$-local} (Chapter~\ref{sec:approx}: the distance
+estimate of the literature's conditional expectation stated as a property of a net, and the
+approximate form of the locality condition of a cellular automaton).\par\medskip\noindent The central theorem is called the
+\emph{path-sum bound} here, a descriptive name for the content of Theorem~3.4 of
+\cite{chen-lucas-yin} and eqs.~(3.41)--(3.42) of \cite{nsy2019}.\par\medskip\noindent \vetnew{Further descriptive
+names: the \emph{path series} and the \emph{path count} $P_k(Y,X)$ (the series of the path-sum
+bound and its coefficients, the summed weights of the paths of length $k$); the \emph{walk
+series}, the \emph{walk bound} and the \emph{walk terms} $\omega_k(t)$ (the same series with the
+path count replaced by the walk sums $W_k(Y,X)$, the bound it gives, and its terms,
+Chapter~\ref{sec:closed}).\par\medskip\noindent Other descriptive names: the \emph{total strength} (the sum $K$ of the strengths);
+\emph{support closure} and \emph{contraction} (the names of hypotheses G2 and G3); the
+\emph{commutator seminorm} $N_S(c)$ (the supremum of $\norm{\comm cb}$ over the unit ball of
+$\cA(S)$); the \emph{touched sites} (the union $T$ of the supports); the \emph{boundary} $\bd Y$
+of a region (its sites touched by a term crossing it); \emph{role exchange} (the bound read
+with the observable and the probe interchanged); \emph{contractive negation} (a family whose
+negated generators satisfy G3 as well, so that the bounds hold for negative times);
+\emph{union-chain} (a sequence of sets each meeting the union of $Y$ and the earlier ones, a
+class that fails the comparison with the site matrix); and \emph{distance} for a function $d$
+of pairs of sites with $d(u,u)=0$ and the triangle inequality, not assumed symmetric.\par\medskip\noindent For
+harmonic bosons (Chapter~\ref{sec:harmonic}): \emph{quadratic generator} (a
+Hamiltonian matrix acting on the Weyl labels, the literature's $JM$ transposed), with the
+\emph{site matrix} extended to the entrywise absolute value $|K|$ of such a generator, and its
+\emph{range} and \emph{row sum}.\par\medskip\noindent Standard
+names are kept where the literature has one: Duhamel's identity, Lindblad generator, jump
+operator, Pauli matrices, Weyl operators, clock and shift, Heisenberg picture, Banach algebra,
+conditional expectation, twirl (the average over a unitary group).} Everything else carries its
+name from the sources.}
+
+\input{reading}
+
+\input{notation}
+
+\clearpage
+\input{objects}
+
+\input{master}
+
+\FloatBarrier
+\input{closed}
+
+\clearpage
+\input{qudit}
+
+\FloatBarrier
+\input{approx}
+
+\section{Fermions}\label{sec:fermions}
+\vetnew{This chapter is to come.}
+
+\FloatBarrier
+\input{harmonic}
+
+\section{The thermodynamic limit}\label{sec:limit}
+\vetnew{This chapter is to come.}
+
+\section*{Notes and references}
+\addcontentsline{toc}{section}{Notes and references}
+\vetnew{The comparisons with the sources are in the chapters' end notes.}
+
+\begin{thebibliography}{99}
+\bibitem{chen-lucas-yin} C.-F. Chen, A. Lucas, C. Yin, Speed limits and locality in many-body
+quantum dynamics, Rep. Prog. Phys. 86 (2023) 116001, arXiv:2303.07386,
+\href{https://doi.org/10.1088/1361-6633/acfaae}{doi:10.1088/1361-6633/acfaae}.
+\bibitem{lieb-robinson} E. H. Lieb, D. W. Robinson, The finite group velocity of quantum spin
+systems, Commun. Math. Phys. 28 (1972) 251--257,
+\href{https://doi.org/10.1007/BF01645779}{doi:10.1007/BF01645779}.
+\bibitem{hastings-koma} M. B. Hastings, T. Koma, Spectral gap and exponential decay of
+correlations, Commun. Math. Phys. 265 (2006) 781--804, arXiv:math-ph/0507008,
+\href{https://doi.org/10.1007/s00220-006-0030-4}{doi:10.1007/s00220-006-0030-4}.
+\bibitem{nachtergaele-sims} B. Nachtergaele, R. Sims, Lieb-Robinson bounds and the exponential
+clustering theorem, Commun. Math. Phys. 265 (2006) 119--130, arXiv:math-ph/0506030,
+\href{https://doi.org/10.1007/s00220-006-1556-1}{doi:10.1007/s00220-006-1556-1}.
+\bibitem{nsy2018} B. Nachtergaele, R. Sims, A. Young, Lieb-Robinson bounds, the spectral flow,
+and stability of the spectral gap for lattice fermion systems, in Mathematical Problems in Quantum
+Physics, Contemp. Math. 717 (2018) 93--115, arXiv:1705.08553,
+\href{https://doi.org/10.1090/conm/717/14443}{doi:10.1090/conm/717/14443}.
+\bibitem{nsy2019} B. Nachtergaele, R. Sims, A. Young, Quasi-locality bounds for quantum lattice
+systems. I. Lieb-Robinson bounds, quasi-local maps, and spectral flow automorphisms, J. Math.
+Phys. 60 (2019) 061101, arXiv:1810.02428,
+\href{https://doi.org/10.1063/1.5095769}{doi:10.1063/1.5095769}.
+\bibitem{nrss2009} B. Nachtergaele, H. Raz, B. Schlein, R. Sims, Lieb-Robinson bounds for
+harmonic and anharmonic lattice systems, Commun. Math. Phys. 286 (2009) 1073--1098,
+arXiv:0712.3820,
+\href{https://doi.org/10.1007/s00220-008-0630-2}{doi:10.1007/s00220-008-0630-2}.
+\bibitem{chen-lucas2021} C.-F. Chen, A. Lucas, Operator growth bounds from graph theory, Commun.
+Math. Phys. 385 (2021) 1273--1323, arXiv:1905.03682,
+\href{https://doi.org/10.1007/s00220-021-04151-6}{doi:10.1007/s00220-021-04151-6}.
+\end{thebibliography}
+
+\input{lean-index}
+\end{document}
