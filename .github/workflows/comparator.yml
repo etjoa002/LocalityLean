@@ -45,8 +45,19 @@ jobs:
           sh elan-init.sh -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
-      - name: Fetch the precompiled Mathlib
-        run: lake exe cache get
+      # While the sibling libraries it depends on are private, a read-only token stored as the
+      # secret DEPS_TOKEN lets this step download them. It is given to this step only, never to
+      # the steps that compile the library. Without the secret (public dependencies) it is skipped.
+      - name: Fetch the dependencies and the precompiled Mathlib
+        env:
+          DEPS_TOKEN: ${{ secrets.DEPS_TOKEN }}
+        run: |
+          if [ -n "$DEPS_TOKEN" ]; then
+            export GIT_CONFIG_COUNT=1
+            export GIT_CONFIG_KEY_0="url.https://x-access-token:${DEPS_TOKEN}@github.com/etjoa002/.insteadOf"
+            export GIT_CONFIG_VALUE_0="https://github.com/etjoa002/"
+          fi
+          lake exe cache get
 
       - name: Build the library and the statement files
         run: lake build LocalityLean Challenge Solution
