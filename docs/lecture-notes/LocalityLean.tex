@@ -52,6 +52,9 @@
 \newcommand{\vetnew}[1]{#1}
 \newcommand{\reve}[1]{#1}
 \newcommand{\vetsource}[1]{#1}
+% Lecture-form pass of 15 Oct 2026 (front matter, reading guide, roadmap, index of terms, filler):
+% blue until the user vets it; set to {#1} once accepted.
+\newcommand{\revs}[1]{#1}
 \title{Lieb-Robinson bounds from one theorem}
 \author{}
 \date{}
@@ -66,77 +69,75 @@
 local interactions, information travels no faster than a finite velocity: the commutator of a
 time-evolved observable with a distant one is exponentially small outside a light cone. These
 notes are the mathematical account of the Lean library LocalityLean. \vetnew{They prove one
-theorem, the path-sum bound: under three hypotheses on the generators of the dynamics, such
-commutators are bounded by a sum over paths of overlapping interaction terms. The published
-bounds for qudit lattices, open systems and harmonic oscillators are then read off as its
-instances; the chapters on fermions and infinite lattices are to come.}}}
+theorem, the path-sum bound: under three hypotheses on the generators of the dynamics, it
+bounds such commutators by a sum over paths of overlapping interaction terms. We then read off
+the published bounds for qudit lattices and open systems as its instances, \revs{and obtain the
+bound for harmonic oscillators from the combinatorics of its closed forms};
+the chapters on fermions and infinite lattices are to come.}}}
 
 {\small\tableofcontents}
 \medskip
 
 \section*{About these notes}
 \addcontentsline{toc}{section}{About these notes}
-\vet{The notes follow the logical build of the theory rather than the order of the literature:
-the objects (nets of local algebras, local generators, paths), the central theorem (the path-sum
-bound), its closed forms (site matrix, decay functions, light cones), then one chapter per
-instance, each showing the same theorem specialized, and finally the thermodynamic limit.
+\noindent\revs{We assume familiarity with C*-algebras, bounded operators on a Banach space and
+their exponential series, and, for Chapter~\ref{sec:harmonic}, the Weyl form of the canonical
+commutation relations. After the notation come a reading guide, which translates the generators
+and paths used here into the interactions and graphs of the literature, and a roadmap of the
+chapters; an index of terms precedes the references.}
 
-\vetnew{\textbf{Reading conventions.} The numbers in the examples are computed by scripts named in
-each chapter's end notes. The literature's terms are used wherever it has one; the terms coined
-for these notes are listed below and in the reading guide.}
-
-\vetnew{A statement marked \LLLeanTag{} has a checked proof in LocalityLean or in the libraries
+\medskip
+\noindent\vetnew{A statement marked \LLLeanTag{} has a checked proof in LocalityLean or in the libraries
 \mbox{LinearAQFT}, \mbox{LocalAlgebrasLean} and \mbox{BosonicLean} on which it builds, whose correspondence with the
 statement here has been independently reviewed; the declaration index at the end names the
 checked declarations. Every Example, and the one Proposition without a Lean proof (on the rescaling of
 units for harmonic bosons), carries exactly one status: \LLLeanTag{} as above,
 \LLScriptTag{} when a check script verifies it exhaustively, or \LLPaperTag{} when it is checked
-on paper only. Definitions, Remarks and paragraphs of motivation carry no marks.}}
+on paper only}\revs{; the scripts behind the numbers are named in the Checks paragraph that
+closes each chapter}.
 
-\medskip\noindent\vetnew{\textbf{Coined terms.}} \vet{\emph{Locality in the argument} (hypothesis G1
-of Definition~\ref{def:local-generators}); \emph{probe} (the second observable in the commutator)
-and \emph{probe reset} (the step of the recursion, Proposition~\ref{prop:reset});
-\emph{first-contact path} (Definition~\ref{def:path}); ``a set \emph{crosses} a region'' (it
-meets the region and its complement; the sources write the condition without a name);
-\emph{site matrix} (the literature's $h_{uv}$, unnamed there); \vetnew{\emph{walk weight}
-(Chapter~\ref{sec:closed}: the literature's entries of $h^k$, named for the abstract setting);
-\emph{decay function} (the literature's $F$-function, here a function of pairs of sites);
-\emph{$F$-bound} (any admissible constant $N_F$ with $h\le N_FF$; the literature's $F$-norm is
-the least such).}\par\medskip\noindent \emph{Hamiltonian
-family} (Chapter~\ref{sec:qudit}: the literature's interaction, indexed by a finite set so that
-one support may carry several terms), ``a matrix \emph{local to} a region'' (the tensor
-factor $m\otimes1$, defined by its action on configurations), ``a net with \emph{local
-approximation}'' and \emph{$\varepsilon$-local} (Chapter~\ref{sec:approx}: the distance
-estimate of the literature's conditional expectation stated as a property of a net, and the
-approximate form of the locality condition of a cellular automaton).\par\medskip\noindent The central theorem is called the
-\emph{path-sum bound} here, a descriptive name for the content of Theorem~3.4 of
-\cite{chen-lucas-yin} and eqs.~(3.41)--(3.42) of \cite{nsy2019}.\par\medskip\noindent \vetnew{Further descriptive
-names: the \emph{path series} and the \emph{path count} $P_k(Y,X)$ (the series of the path-sum
-bound and its coefficients, the summed weights of the paths of length $k$); the \emph{walk
-series}, the \emph{walk bound} and the \emph{walk terms} $\omega_k(t)$ (the same series with the
-path count replaced by the walk sums $W_k(Y,X)$, the bound it gives, and its terms,
-Chapter~\ref{sec:closed}).\par\medskip\noindent Other descriptive names: the \emph{total strength} (the sum $K$ of the strengths);
-\emph{support closure} and \emph{contraction} (the names of hypotheses G2 and G3); the
-\emph{commutator seminorm} $N_S(c)$ (the supremum of $\norm{\comm cb}$ over the unit ball of
-$\cA(S)$); the \emph{touched sites} (the union $T$ of the supports); the \emph{boundary} $\bd Y$
-of a region (its sites touched by a term crossing it); \emph{role exchange} (the bound read
-with the observable and the probe interchanged); \emph{contractive negation} (a family whose
-negated generators satisfy G3 as well, so that the bounds hold for negative times);
-\emph{union-chain} (a sequence of sets each meeting the union of $Y$ and the earlier ones, a
-class that fails the comparison with the site matrix); and \emph{distance} for a function $d$
-of pairs of sites with $d(u,u)=0$ and the triangle inequality, not assumed symmetric.\par\medskip\noindent For
-harmonic bosons (Chapter~\ref{sec:harmonic}): \emph{quadratic generator} (a
-Hamiltonian matrix acting on the Weyl labels, the literature's $JM$ transposed), with the
-\emph{site matrix} extended to the entrywise absolute value $|K|$ of such a generator, and its
-\emph{range} and \emph{row sum}.\par\medskip\noindent Standard
-names are kept where the literature has one: Duhamel's identity, Lindblad generator, jump
-operator, Pauli matrices, Weyl operators, clock and shift, Heisenberg picture, Banach algebra,
-conditional expectation, twirl (the average over a unitary group).} Everything else carries its
-name from the sources.}
+\input{notation}
 
 \input{reading}
 
-\input{notation}
+\section*{Roadmap}
+\addcontentsline{toc}{section}{Roadmap}
+
+\noindent\vet{The notes follow the logical build of the theory rather than the order of the literature:
+the objects (nets of local algebras, local generators, paths), the central theorem (the path-sum
+bound), its closed forms (site matrix, decay functions, light cones), then one chapter per
+instance, each showing the same theorem specialized, and finally the thermodynamic limit.}
+\revs{Figure~\ref{fig:roadmap} shows which chapters use which. Chapter~\ref{sec:harmonic} is the
+exception to the pattern: the generator of harmonic bosons is unbounded, so the path-sum bound of
+Chapter~\ref{sec:master} does not apply, and the chapter uses only the combinatorics of
+Chapter~\ref{sec:closed}.}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  font=\small,
+  done/.style={draw, rounded corners=2pt, fill=gray!8, text width=4cm, align=center,
+    execute at begin node={\hyphenpenalty=10000\relax}, minimum height=1.05cm, inner sep=3pt},
+  plan/.style={done, dashed, fill=none},
+  dep/.style={-{Stealth[length=2mm]}, thick}]
+  \node[done] (s1) at (0,0) {\ref*{sec:objects}\quad Nets, generators and paths};
+  \node[done] (s2) at (0,-1.8) {\ref*{sec:master}\quad The path-sum bound};
+  \node[done] (s3) at (0,-3.6) {\ref*{sec:closed}\quad Closed forms and light cones};
+  \node[done] (s4) at (5,-3.6) {\ref*{sec:qudit}\quad Hamiltonians and qudit lattices};
+  \node[done] (s5) at (10,-3.6) {\ref*{sec:approx}\quad Local approximation and open systems};
+  \node[done] (s7) at (5,-5.4) {\ref*{sec:harmonic}\quad Harmonic oscillators};
+  \node[plan] (s6) at (5,-1.8) {\ref*{sec:fermions}\quad Fermions (to come)};
+  \node[plan] (s8) at (10,-1.8) {\ref*{sec:limit}\quad The thermodynamic limit (to come)};
+  \draw[dep] (s1) -- (s2);
+  \draw[dep] (s2) -- (s3);
+  \draw[dep] (s3) -- (s4);
+  \draw[dep] (s4) -- (s5);
+  \draw[dep] (s3.south) |- (s7.west);
+\end{tikzpicture}
+\caption{\revs{The chapters and their dependence: an arrow points from a chapter to one that
+uses it. Dashed: chapters to come.}}
+\label{fig:roadmap}
+\end{figure}
 
 \clearpage
 \input{objects}
@@ -161,10 +162,10 @@ name from the sources.}
 \section{The thermodynamic limit}\label{sec:limit}
 \vetnew{This chapter is to come.}
 
-\section*{Notes and references}
-\addcontentsline{toc}{section}{Notes and references}
-\vetnew{The comparisons with the sources are in the chapters' end notes.}
+\clearpage
+\input{terms}
 
+\phantomsection\addcontentsline{toc}{section}{References}
 \begin{thebibliography}{99}
 \bibitem{chen-lucas-yin} C.-F. Chen, A. Lucas, C. Yin, Speed limits and locality in many-body
 quantum dynamics, Rep. Prog. Phys. 86 (2023) 116001, arXiv:2303.07386,

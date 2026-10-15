@@ -2,22 +2,21 @@
 
 \motiv{\vet{A Lieb-Robinson bound is a statement about three things: where observables live,
 how the dynamics is assembled from local pieces, and which chains of pieces can carry a signal
-from one region to another. This chapter fixes the three objects and nothing else. The net of
+from one region to another. In this chapter we fix the three objects. The net of
 local algebras records where observables live (Definition~\ref{def:net}); the local generator
 family records the dynamics as a finite sum of bounded maps, each tied to a patch of sites and
 each obeying three hypotheses (Definition~\ref{def:local-generators}); the paths record the
 chains (Definition~\ref{def:path}).
 
-The path-sum bound of Chapter~\ref{sec:master} is a bound on commutators by a weighted count of
-paths, and every later chapter is the same theorem with one of these objects made concrete. A reader who knows the literature's interactions
-$\Phi(Z)$ will recognise the Hamiltonian case in Example~\ref{ex:hamiltonian}; the reading guide
-gives the full dictionary.}}
+The path-sum bound of Chapter~\ref{sec:master} \revs{bounds the commutator of an observable $a$
+on a region $X$, evolved in time, with a second observable $b$, the \emph{probe}, on a region
+$Y$, by a weighted count of paths from $Y$ to $X$}. A reader who knows the literature's
+interactions $\Phi(Z)$ will recognise the Hamiltonian case in Example~\ref{ex:hamiltonian}.}}
 
 \subsection{The net of local algebras}\label{subsec:net}
 
 \vet{Throughout, $\Lambda$ is a set, the \emph{sites}, and $\cA$ a unital C*-algebra, the
-\emph{ambient algebra}. The regions are all subsets of $\Lambda$; no metric is assumed in this
-chapter, and no finiteness of $\Lambda$.}
+\emph{ambient algebra}. The regions are all subsets of $\Lambda$.}
 
 \begin{definition}[net of local algebras]\label{def:net}
 A \emph{net} assigns to every region $Z\subseteq\Lambda$ \vetnew{a unital C*-subalgebra
@@ -32,8 +31,8 @@ regions over an abstract causal structure that says which regions are spacelike 
 which depend on which. On a lattice the structure is the simplest one: two regions are spacelike
 separated exactly when they are disjoint, and a region depends on another exactly when it is
 contained in it. Causality of the net for this structure is the commutation above, and it is
-the only property of the structure used in these notes. \vetnew{The
-assignment is required on all subsets, including infinite ones, because the proof of the
+the only property of the structure used in these notes. \vetnew{We
+require the assignment on all subsets, including infinite ones, because the proof of the
 path-sum bound uses the local algebra of the complement $Y^c$ of the probe's region, which is
 infinite when $\Lambda$ is infinite and $Y$ finite.} On a finite lattice this is no restriction; on the infinite lattice of
 Chapter~\ref{sec:limit} the quasi-local algebra supplies $\cA(Z)$ for every $Z$.}
@@ -43,8 +42,8 @@ Chapter~\ref{sec:limit} the quasi-local algebra supplies $\cA(Z)$ for every $Z$.
 \motiv{\vet{A bounded map of $\cA$ can only be called local if there is a way to say how much
 an observable \emph{sees} a region. The right quantity is not the norm of the observable but
 how far it is from commuting with the region's algebra; an observable supported far away sees
-nothing, however large it is. The commutator seminorm measures this, and hypothesis (G1) below
-is phrased with it.}}
+nothing, however large it is. The commutator seminorm measures this, and we phrase hypothesis
+(G1) below with it.}}
 
 \begin{definition}[commutator seminorm]\label{def:commnorm}
 For a region $S$ and $c\in\cA$,
@@ -106,17 +105,14 @@ terms \emph{crossing} $Y$.
 \vet{\vetnew{The superscript in $I^{\partial Y}$ is for now a label for the terms crossing $Y$;
 the boundary $\bd Y$ as a set of sites is defined in Chapter~\ref{sec:closed}.} The exponential
 is that of the Banach algebra of bounded operators on $\cA$,
-$e^{tL}=\sum_{n\ge0}t^nL^n/n!$. Hypothesis (G3) is asked for every sub-family because the proof
+$e^{tL}=\sum_{n\ge0}t^nL^n/n!$. We ask for (G3) for every sub-family because the proof
 switches off the terms crossing the probe's region and evolves with the rest; the instances verify it
 uniformly (unitarity for a Hamiltonian family, Chapter~\ref{sec:qudit}; for a Lindblad family
 it is carried as a hypothesis, implied by complete positivity with unit preservation,
 Chapter~\ref{sec:approx}), so nothing is lost by
-asking for all $J$ at once, though only the full family
-and the complements $I\setminus I^{\partial Y'}$ of the regions $Y'$ that the recursion visits
-are used.
-
-The finiteness of each $S_i$ is not used in this chapter or the next; it enters with the site
-matrix of Chapter~\ref{sec:closed}.}
+asking for all $J$ at once, though the proof uses only the full family
+and the complements $I\setminus I^{\partial Y'}$ of the regions $Y'$ that the recursion
+visits.}
 
 \begin{proposition}[sub-families]\label{prop:subfamilies}
 For a family of local generators, all $J,J'\subseteq I$, every region $Y$ and all $a,c\in\cA$:
@@ -155,13 +151,13 @@ and the Heisenberg dynamics $\tau_t(A)=e^{\ii tH}Ae^{-\ii tH}$.}
 \motiv{\vet{A signal from the probe's region $Y$ to the observable's region $X$ must pass from
 term to term, the first crossing $Y$ and each crossing the last. The combinatorial object is the sequence of terms it
 passes through, and the bound will count such sequences, each weighted by the product of the
-strengths of its terms. Two conventions are fixed here and matter later. Each term crosses the
+strengths of its terms. We fix two conventions here that matter later. Each term crosses the
 patch of the previous one, meeting it and its complement: a term inside the current patch cannot
 carry the signal out of it, as Chapter~\ref{sec:master} shows, so no term follows itself and no
 term is nested in its predecessor (a term may recur later, after another one). And a path ends
 at the first term that touches $X$, because the recursion stops there.
-Figure~\ref{fig:hypergraph} shows the crossing condition; the first-contact condition is seen in
-Example~\ref{ex:twosites} and in the chain of Chapter~\ref{sec:master}.}}
+Figure~\ref{fig:hypergraph} shows the crossing condition; Example~\ref{ex:twosites} and the
+chain of Chapter~\ref{sec:master} show the first-contact condition.}}
 
 \begin{definition}[first-contact paths]\label{def:path}
 Let $X,Y$ be regions and $k\ge1$. A \emph{path of length $k$ from $Y$ to $X$} is a sequence
@@ -214,9 +210,6 @@ $P_{k+1}(Y,X)\le\sum_i\kappa_iK^k=K^{k+1}$.\qedhere
 \end{enumerate}
 \end{proof}
 
-\vet{The recursion of (a) is the form in which the path count enters the proof of the path-sum
-bound; the explicit sum over sequences is the form in which it is read.}
-
 \begin{example}[two qubits]\label{ex:twosites}
 \vet{Two sites $\Lambda=\{0,1\}$, each carrying a qubit, so \vetnew{$\cA=\Mat_2(\C)\otimes\Mat_2(\C)$} with
 \vetnew{$\cA(\{0\})=\Mat_2(\C)\otimes1$, $\cA(\{1\})=1\otimes\Mat_2(\C)$}, and the Pauli matrices
@@ -251,10 +244,10 @@ hypothesis (G1). The literature states the dynamics through an interaction $\Phi
 $H_e$ (\cite{chen-lucas-yin}, \S3); both are instances of Definition~\ref{def:local-generators}
 (Chapters~\ref{sec:qudit} and~\ref{sec:approx}). The crossing condition is that of the chains
 of \cite{nsy2019}, eqs.~(3.41)--(3.42), which run over sets meeting the previous set and its
-complement (their chains start at the observable's region and ours at the probe's; the
-orientation is reconciled in Chapter~\ref{sec:master}); the sequences of \cite{chen-lucas-yin},
+complement (their chains start at the observable's region and ours at the probe's;
+Chapter~\ref{sec:master} reconciles the orientation); the sequences of \cite{chen-lucas-yin},
 Theorem~3.4, eq.~(3.34), run from a set meeting $Y$ to a set meeting $X$ with consecutive overlap and distinct
-consecutive terms, a larger class; the first-contact condition is ours. Union-chains, sequences
+consecutive terms, a larger class; the first-contact condition is ours. \emph{Union-chains}, sequences
 in which each set meets the union of $Y$ and the earlier sets, are a tempting but wrong
 bookkeeping object: the three-term example of Figure~\ref{fig:hypergraph} separates the two
 notions, and there are four-term hypergraphs on three sites for which union-chains are not
@@ -262,6 +255,4 @@ dominated by the site-matrix bound of Chapter~\ref{sec:closed}, whereas paths al
 
 \paragraph{Checks.} {\small The counts of Figure~\ref{fig:hypergraph} and of
 Example~\ref{ex:twosites} are computed by \texttt{checks/m1a\_check.py} and
-\texttt{checks/path\_check.py}; the four-term hypergraph is in the latter's section~2. \vetnew{The counts of the two examples of
-the reading guide are computed by \texttt{checks/m1a\_check.py}, \texttt{checks/path\_check.py}
-and \texttt{checks/m1a\_crossing\_check.py}.}}
+\texttt{checks/path\_check.py}; the four-term hypergraph is in the latter's section~2.}

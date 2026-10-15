@@ -6,8 +6,8 @@ speaks of a graph whose edges carry Hamiltonian terms $H_e$, of a \emph{site mat
 adding up the strengths of the terms containing two sites, and of walks on the graph; the
 mathematical-physics papers~\cite{nachtergaele-sims,nsy2019} speak of an interaction $\Phi$
 assigning a self-adjoint term $\Phi(Z)$ to each finite set $Z$ of sites, of a \emph{decay
-function} $F$ with a reproducing property, and of the $F$-norm $\norm{\Phi}_F$ (the site matrix
-and the decay functions are defined in Chapter~\ref{sec:closed}).
+function} $F$ with a reproducing property, and of the $F$-norm $\norm{\Phi}_F$
+(Chapter~\ref{sec:closed} defines the site matrix and the decay functions).
 
 These notes use a third, slightly more general language, chosen so that one theorem covers Hamiltonian and open
 dynamics alike: a finite family of \emph{local generators} $L_i$ with supports $S_i$ and
@@ -79,31 +79,6 @@ Prop.~2.1 of~\cite{nsy2018} & graded net; graded bracket $\gcomm{A}{B}$ (Chapter
 \bottomrule
 \end{longtable}}
 
-\medskip
-\noindent\vet{\textbf{Why the path is the right object: two small examples.} The dictionary
-above maps three ways of counting how a signal travels: the paths of these notes, the review's
-sequences of edges, and the site matrix $h$, whose powers count walks between sites. The two
-examples show how the three counts relate on the smallest cases, and why these notes count paths:
-the path count is the one the proof produces, it is never larger than the site-matrix count (so
-the closed forms of Chapter~\ref{sec:closed} follow from it), and the looser notion of
-union-chains fails that comparison.
-
-\emph{The two-term chain.} Two terms, $S_1=\{0,1\}$ of strength $\kappa_1$ and $S_2=\{1,2\}$ of
-strength $\kappa_2$, with the probe on $Y=\{2\}$ and the observable on $X=\{0\}$. Only $S_2$
-crosses $Y$; after it only $S_1$ can follow, since $S_2$ does not cross itself; so the only path
-is $(S_2,S_1)$, $P_2=\kappa_1\kappa_2$, and the bound of Chapter~\ref{sec:master} is
-$4\kappa_1\kappa_2t^2$ \vetnew{for every $t\ge0$}. The review's sequences admit the alternating sequences
-$(S_2,S_1,S_2,\dots)$ as well, since they have no first-contact condition; the site matrix counts
-even more, every walk, and its diagonal entry $h_{11}=\kappa_1+\kappa_2$ is what pays for the
-repeats it admits, so that $P_k\le(h^k)_{02}$ for every $k$.
-
-\emph{Three terms.} Terms on $\{1,2\}$, $\{1,3\}$, $\{3,4\}$, all of strength one, $Y=\{1\}$,
-$X=\{4\}$. The sequence $(\{1,3\},\{1,2\},\{3,4\})$ is a union-chain, each set meeting the
-union of the earlier ones and $Y$, but it is not a path: $\{1,2\}$ and $\{3,4\}$ do not meet.
-Counting paths of length $k$ against the entries $(h^k)_{41}$ gives $0\le0$, $1\le1$, $1\le5$,
-$1\le20$ for $k=1,\dots,4$. Union-chains, counted the same way, exceed the matrix entries on a
-four-term hypergraph on three sites, so they cannot be the bookkeeping object of a bound that is
-to imply the site-matrix form.}
 
 \medskip
 \noindent\vet{\textbf{Reconnections.} \vetnew{Each chapter from Chapter~\ref{sec:master} on ends
@@ -112,5 +87,5 @@ Chapter~\ref{sec:master}; Theorem~3.1 of~\cite{nsy2019} in Chapters~\ref{sec:clo
 and~\ref{sec:qudit}; the review's bound for spin systems, its eq.~(3.36), in
 Chapter~\ref{sec:qudit}; the review's Theorem~3.14 and Proposition~4.1 in
 Chapter~\ref{sec:approx}; Theorem~3.1 of~\cite{nrss2009} in Chapter~\ref{sec:harmonic}; Theorem~3.1
-of~\cite{nsy2018} in the chapter to come.} The route of the sources through the Jacobi identity is sketched in
-Chapter~\ref{sec:master}.}
+of~\cite{nsy2018} in the chapter to come.} Chapter~\ref{sec:master} sketches the route of the
+sources through the Jacobi identity.}

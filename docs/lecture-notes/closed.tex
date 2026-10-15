@@ -1,8 +1,8 @@
 \section{Closed forms and light cones}\label{sec:closed}
 
 \motiv{\vet{The path-sum bound of Chapter~\ref{sec:master} is exact bookkeeping: it counts the
-sequences of terms that can carry a signal. To read it as a statement about distances, one
-replaces the count of paths by something that only sees pairs of sites, the \emph{site matrix},
+sequences of terms that can carry a signal. To read it as a statement about distances, we
+replace the count of paths by something that only sees pairs of sites, the \emph{site matrix},
 whose entry at $(u,u')$ adds up the strengths of the terms containing both sites. A path of $k$
 terms visits $k+1$ sites, one in the probe's region, one in each of the $k-1$ overlaps of
 consecutive supports, and one in the observable's region; its weight is at most the product of
@@ -15,11 +15,11 @@ geometry bounds the row sums and makes distant entries of the powers vanish, and
 exponential series gives the light cone. \vetnew{A last section extends all of these to negative
 times when the negated generators are contractive as well, as they are for a Hamiltonian.}}}
 
-\subsection{The site matrix and walks}
+\subsection{The site matrix and walks}\label{subsec:sitematrix}
 
 \vet{Throughout, $(S_i,L_i,\kappa_i)_{i\in I}$ is a family of local generators on a causal net
-over an arbitrary set of sites $\Lambda$, and $T:=\bigcup_iS_i$ is the finite set of sites the
-family touches. We write $\chi_i(u):=\ind{u\in S_i}$ for the indicator of a support.}
+over an arbitrary set of sites $\Lambda$, and $T:=\bigcup_iS_i$ is the finite set of
+\revs{\emph{touched sites}, the sites the family touches}. We write $\chi_i(u):=\ind{u\in S_i}$ for the indicator of a support.}
 
 \begin{definition}[site matrix, walks]\label{def:sitematrix}
 \vet{The \emph{site matrix} of the family is
@@ -148,7 +148,7 @@ exponential series, and \eqref{eq:master} gives \eqref{eq:walkseries}.}
   \omega_k(t):=\frac{(2t)^{k+1}}{(k+1)!}\,W_{k+1}(Y,X)=\gamma_k(t)\,W_{k+1}(Y,X),
 \end{equation}
 with the coefficient $\gamma_k$ of \eqref{eq:truncbound}, so that the series in
-\eqref{eq:walkseries} is $\sum_{k\ge0}\omega_k(t)$. The index is shifted by one, so that
+\eqref{eq:walkseries} is $\sum_{k\ge0}\omega_k(t)$. We shift the index by one so that
 $\omega_k$ carries the walks of $k+1$ steps as $\gamma_k$ carries the paths of length $k+1$. The
 walk terms depend on the strengths $\kappa_i$, through the site matrix in $W_{k+1}$, and on the
 pair $(Y,X)$; Chapter~\ref{sec:approx} uses them.}
@@ -198,8 +198,7 @@ sites while the paths have stopped. The path series is exactly $2t^2$; the walk 
 \subsection{Decay functions}
 
 \vet{\vetnew{A decay function is a function of pairs of sites that reproduces itself under convolution;
-the bounds use a constant multiple of it that dominates the site matrix.} Only the finite-sum form of that property is
-needed.}
+the bounds use a constant multiple of it that dominates the site matrix.}}
 
 \begin{definition}[decay function]\label{def:kernel}
 \vet{A \vetnew{\emph{decay function}} is a function $F:\Lambda\times\Lambda\to[0,\infty)$ with a constant
@@ -231,8 +230,8 @@ needs $h_{x,x+1}=1\le N_Fe^{-\lambda}/4$.}
 \vet{In general, for \vetnew{a distance $d$ (Definition~\ref{def:geometry})} and a non-increasing
 $F_0:[0,\infty)\to(0,\infty)$, the \vetnew{function} $F(x,y)=F_0(d(x,y))$ satisfies \eqref{eq:reproducing} as soon as the reproducing constant
 $C_F=\sup_{x,y}\sum_zF_0(d(x,z))F_0(d(z,y))/F_0(d(x,y))$ is finite, which is an assumption on
-$F_0$ and the lattice; for the lattice $\mathbb Z^\nu$ the constant is quoted from the literature
-in Chapter~\ref{sec:qudit} and computed there on finite pieces.
+$F_0$ and the lattice; for the lattice $\mathbb Z^\nu$ Chapter~\ref{sec:qudit} quotes the
+constant from the literature and computes it on finite pieces.
 \vetnew{The least $F$-bound is then the literature's $F$-norm of the interaction, when each
 support carries one term (Chapter~\ref{sec:qudit}); every larger number is an $F$-bound as
 well.}}
@@ -263,7 +262,7 @@ observables exchanged, which for a group of automorphisms follows from
 Theorem~\ref{thm:exchange} (Chapter~\ref{sec:qudit}), with Theorem~\ref{thm:reverse} for the
 negative time}.}
 
-\subsection{Bounded geometry and light cones}
+\subsection{Bounded geometry and light cones}\label{subsec:geometry}
 
 \begin{definition}[bounded geometry]\label{def:geometry}
 \vet{Let $d:\Lambda\times\Lambda\to\R$ satisfy $d(u,u)=0$ and $d(u,u'')\le d(u,u')+d(u',u'')$.
@@ -272,9 +271,9 @@ most $g$ indices $i$, every $\kappa_i\le\ell$, every $|S_i|\le p$, and $d(u,u')\
 in a common support ($\ell,\rho\ge0$). Write $v:=2g\ell p$.}
 \end{definition}
 
-\vetnew{A function $d$ with $d(u,u)=0$ and the triangle inequality is called a \emph{distance}
-here. It is not assumed symmetric, so $d(u,u')$ and $d(u',u)$ may differ, and the order of the
-arguments is kept throughout: the first on the probe's side, the second on the observable's.}
+\vetnew{We call a function $d$ with $d(u,u)=0$ and the triangle inequality a \emph{distance}.
+It is not assumed symmetric, so $d(u,u')$ and $d(u',u)$ may differ, and we keep the order of the
+arguments throughout: the first on the probe's side, the second on the observable's.}
 
 \begin{proposition}[walks and distance]\label{prop:distance}
 \vet{With bounded geometry $(g,\ell,p,\rho)$:
@@ -361,11 +360,12 @@ chain of Example~\ref{ex:chain} the path series itself is sharp to leading order
 times.}
 \end{example}
 
-\subsection{Time reversal}
+\subsection{Time reversal}\label{subsec:reversal}
 
-\vet{The path-sum bound was proved for $t\ge0$, because hypothesis (G3) is a statement about
+\vet{We proved the path-sum bound for $t\ge0$, because hypothesis (G3) is a statement about
 $e^{tL_J}$ for $t\ge0$. If the family also satisfies (G3) with every $L_i$ replaced by $-L_i$,
-which is the case for a group of automorphisms, the bound holds for all times.}
+which is the case for a group of automorphisms, \revs{we say that the family has a
+\emph{contractive negation}, and then} the bound holds for all times.}
 
 \begin{theorem}[time reversal]\label{thm:reverse}
 \vet{Let the net be causal, and suppose $\norm{e^{-tL_J}}\le1$ for every $J\subseteq I$ and
@@ -405,8 +405,7 @@ Chapter~\ref{sec:qudit}.
 \emph{Geometry.} The bounded-degree form is the review's Proposition~3.5, whose constants
 ($4(g-1)h$ for the velocity and $K=1/(1-2/e)$ for the tail) are sharper than
 \eqref{eq:geometryform}'s $v=2g\ell p$ and $e^{vt}$, because the review's walks never return
-along the edge they came from; the exponential form is \vetnew{the review's Example~3.6}. The proof of
-Theorem~\ref{thm:domination} uses the finiteness of $T$, not of $\Lambda$.}
+along the edge they came from; the exponential form is \vetnew{the review's Example~3.6}.}
 
 \paragraph{Checks.} {\small The site matrix, walk weights and series of
 Example~\ref{ex:chainwalk}, the domination on random hypergraphs, the constants $C_F$ (the least

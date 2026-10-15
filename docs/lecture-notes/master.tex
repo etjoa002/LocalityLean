@@ -9,9 +9,9 @@ integral; hypothesis (G1) then replaces the probe $b$ by a probe on the patch $S
 term, one step closer to the observable, and hypothesis (G3) guarantees that the free evolution in
 between cannot amplify anything.
 
-Iterating, the commutator is bounded by a sum over paths of
+Iterating, we bound the commutator by a sum over paths of
 terms leading from $Y$ to $X$, each weighted by the product of its strengths and by the factor $t^k/k!$ that the
-nested time integrals produce. \vetnew{This chapter proves that bound,
+nested time integrals produce\revs{; we call this sum the \emph{path series}}. \vetnew{This chapter proves that bound,
 Theorem~\ref{thm:master}, in five steps: the two analytic lemmas (Duhamel's identity and the
 invariance of closed subspaces under the exponential), the support of the restricted dynamics
 (a term inside the probe's region annihilates the observables outside it), the one-step
@@ -129,13 +129,13 @@ patches visited is a path of Definition~\ref{def:path}.}}
 \label{fig:recursion}
 \end{figure}
 
-\vet{The reset step is where the probe moves: on the right-hand side the commutator with the
+\vet{The reset step\revs{, the \emph{probe reset},} is where the probe moves: on the right-hand side the commutator with the
 original probe $b$ has become the seminorm $N_{S_i}(c)$, a supremum of commutators with probes
 on the single patch $S_i$. The next statement packages one application of Duhamel's identity
 with this step. It takes an arbitrary continuous majorant of the reset seminorms, because that
 is how the induction will consume it. The theorem needs the regions disjoint, so a probe on a
-patch that meets $X$ cannot be reset again; there the trivial bound $2$ of
-Proposition~\ref{prop:commnorm}(a) is used instead. This is why paths end at first contact.}
+patch that meets $X$ cannot be reset again; there we use the trivial bound $2$ of
+Proposition~\ref{prop:commnorm}(a) instead. This is why paths end at first contact.}
 
 \begin{theorem}[one Duhamel step]\label{thm:onestep}
 Let the net be causal, $X\cap Y=\emptyset$, $a\in\cA(X)$, $b\in\cA(Y)$ with $\norm b\le1$,
@@ -311,8 +311,7 @@ attributes the theorem to the work it numbers [34], and the stronger irreducible
 \vet{Theorem~\ref{thm:master} is the generator-level form of the Lieb-Robinson path series,
 Theorem~3.4 of \cite{chen-lucas-yin} and eqs.~(3.41)--(3.42) of \cite{nsy2019}, with the
 differences listed above; its constants, $2\kappa_i$ per step and $t^k/k!$, are theirs.
-Duhamel's identity and the invariance lemma are standard; both are proved here for a general
-complete normed unital real algebra and a general Banach space.}
+Duhamel's identity and the invariance lemma are standard.}
 
 \paragraph{Checks.} {\small The numbers of Example~\ref{ex:chain} are computed by
 \texttt{checks/m1a\_crossing\_check.py} and \texttt{checks/m1a\_chain\_expansion\_check.py},
